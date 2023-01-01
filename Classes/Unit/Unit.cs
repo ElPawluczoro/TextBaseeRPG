@@ -20,14 +20,13 @@ namespace TextBasedRPG.Classes.Unit
             damage = dmg;
         }
 
-        public void DisplayInfomrmation()
+        public virtual void DisplayInformation()
         {
-            Console.WriteLine("Name: " + name + "\n" +
+            Console.Write("Name: " + name + "\n" +
                 "Health Points: " + healthPoints + "\n" +
                 "Damage: " + damage + "\n" + 
                 "Armour: " + armour + "\n");
             if (!this.IsAlive()) Console.WriteLine("Dead \n");
-            WriteMethods.WriteSeparator();
         }
 
         public void DealDamage(Unit u)
@@ -38,6 +37,7 @@ namespace TextBasedRPG.Classes.Unit
         public void GetDamage(int d)
         {
             if(d>this.armour) this.healthPoints-=(d-this.armour);
+            DisplayInformation();
         }
 
         public int ReturnDamage()

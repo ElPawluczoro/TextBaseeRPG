@@ -15,10 +15,10 @@ namespace TextBasedRPG.Classes.Items
             return value;
         }
 
-        public void DisplayInformation()
+        public override void DisplayInformation()
         {
             base.DisplayInformation();
-            Console.WriteLine("Value: " + this.value + "\n");
+            Console.WriteLine("Value: " + this.value);
         }
     }
 }

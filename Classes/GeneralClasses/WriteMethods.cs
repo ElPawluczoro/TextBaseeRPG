@@ -10,7 +10,7 @@ namespace TextBasedRPG.Classes.GeneralClasses
     {
         public static void WriteSeparator()
         {
-            Console.WriteLine("---------------------\n");
+            Console.WriteLine("---------------------");
         } 
     }
 }

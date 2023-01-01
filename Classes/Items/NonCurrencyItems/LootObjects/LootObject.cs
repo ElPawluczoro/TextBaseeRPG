@@ -23,10 +23,10 @@ namespace TextBasedRPG.Classes.Items
             return quantity;
         }
 
-        public void DisplayInformation()
+        public override void DisplayInformation()
         {
             base.DisplayInformation();
-            Console.WriteLine("Quantity: " + this.quantity + "\n");
+            Console.WriteLine("Quantity: " + this.quantity);
         }
 
         public void AddLoot(LootObject lo)

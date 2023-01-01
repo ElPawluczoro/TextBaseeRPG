@@ -12,9 +12,9 @@ namespace TextBasedRPG.Classes.Items
         protected string name;
         protected ItemKind kind;
 
-        public void DisplayInformation()
+        public virtual void DisplayInformation()
         {
-            Console.WriteLine(this.name + "\n");
+            Console.WriteLine(this.name);
         }
 
         public ItemKind GetItemKind()

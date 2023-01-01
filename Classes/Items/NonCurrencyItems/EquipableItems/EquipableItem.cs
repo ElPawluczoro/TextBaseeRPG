@@ -38,10 +38,10 @@ namespace TextBasedRPG.Classes.Items
             return this.healthPoints;
         }
 
-        public void DisplayInformation()
+        public override void DisplayInformation()
         {
             base.DisplayInformation();
-            Console.WriteLine("Requaierd Level: " + HeroMethods.LevelToInt(this.requaierdLevel) + "\n");
+            Console.WriteLine("Requaierd Level: " + HeroMethods.LevelToInt(this.requaierdLevel));
         }
 
     }
