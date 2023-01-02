@@ -12,7 +12,7 @@ namespace TextBasedRPG.Classes.Unit
 {
     internal abstract class Hero : Unit
     {
-        protected List<Item> equipment = new List<Item>();
+        protected List<NonCurrencyItem> equipment = new List<NonCurrencyItem>();
         protected List<Currency> pocket = new List<Currency>();
 
         protected string className;
@@ -65,7 +65,7 @@ namespace TextBasedRPG.Classes.Unit
             return this.maxExpieriencePoints;
         }
 
-        public List<Item> GetEquipment()
+        public List<NonCurrencyItem> GetEquipment()
         {
             return this.equipment;
         }
@@ -78,10 +78,9 @@ namespace TextBasedRPG.Classes.Unit
         public void EquipItem(int i)
         {
             EquipableItem item = (EquipableItem)this.equipment[i-1];
-            ItemKind[] armours = { ItemKind.HEAD_ARMOUR, ItemKind.BODY_ARMOUR, 
-                                    ItemKind.GLOVES, ItemKind.LEGS_ARMOUR, ItemKind.BOOTS};
-            
-            if(item.GetItemKind() == ItemKind.WEAPON)
+            ItemKind[] armours = ItemsLists.armours;
+
+            if (item.GetItemKind() == ItemKind.WEAPON)
             {
                 this.mainHand = item;
                 this.damage += item.GetDamage();
@@ -122,8 +121,7 @@ namespace TextBasedRPG.Classes.Unit
 
         public void UnequipItem(ItemKind i)
         {
-            ItemKind[] armours = { ItemKind.HEAD_ARMOUR, ItemKind.BODY_ARMOUR,
-                                    ItemKind.GLOVES, ItemKind.LEGS_ARMOUR, ItemKind.BOOTS};
+            ItemKind[] armours = ItemsLists.armours;
 
             if (i == ItemKind.WEAPON)
             {
@@ -254,11 +252,11 @@ namespace TextBasedRPG.Classes.Unit
 
         public void DisplayEquipment()
         {
-            ItemKind[] armours = { ItemKind.HEAD_ARMOUR, ItemKind.BODY_ARMOUR,
-                                    ItemKind.GLOVES, ItemKind.LEGS_ARMOUR, ItemKind.BOOTS};
+            ItemKind[] armours = ItemsLists.armours;
+            
 
             int i = 0;
-            Console.Write(this.name + "equipment:\n");
+            Console.Write(this.name +"'s" + " equipment:\n");
             foreach(Item item in equipment)
             {
                 i++;
