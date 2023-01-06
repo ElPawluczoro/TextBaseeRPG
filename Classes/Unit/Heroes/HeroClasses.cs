@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace TextBasedRPG.Classes.Unit.Heroes
 {
-    internal class Warrior : Hero
+    internal enum HeroClasses
     {
-        public Warrior(string n) : base(20, 2, n)
-        {
-            this.armour = 3;
-            this.className = "Warrior";
-        }
+        WARRIOR
     }
 }

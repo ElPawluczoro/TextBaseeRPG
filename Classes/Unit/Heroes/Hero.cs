@@ -17,6 +17,8 @@ namespace TextBasedRPG.Classes.Unit
 
         protected string className;
 
+        protected Location location;
+
         //equiped stuff
         protected EquipableItem head;
         protected EquipableItem body;

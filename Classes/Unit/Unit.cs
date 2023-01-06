@@ -34,6 +34,11 @@ namespace TextBasedRPG.Classes.Unit
             u.GetDamage(this.ReturnDamage());
         }
 
+        public string GetName()
+        {
+            return name;
+        }
+
         public void GetDamage(int d)
         {
             if(d>this.armour) this.healthPoints-=(d-this.armour);
