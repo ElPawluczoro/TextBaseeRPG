@@ -5,13 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextBasedRPG.Classes.GeneralClasses;
+using TextBasedRPG.Classes.Locations;
+using TextBasedRPG.Classes.Locations.Places;
 using TextBasedRPG.Classes.Player;
 using TextBasedRPG.Classes.Unit;
+using TextBasedRPG.Classes.Unit.Monsters;
+using TextBasedRPG.Classes.Fighting;
 
 namespace TextBasedRPG.Classes.GameControll
 {
     internal class GameControll
     {
+        private static Random random = new Random();
 
         private static void ComandNotFoundMessage(){
             Console.WriteLine("Could not find comand");
@@ -57,6 +62,8 @@ namespace TextBasedRPG.Classes.GameControll
         public static void GetUserInputMenu()
         {
             string userInput = Console.ReadLine();
+            WriteMethods.WriteSeparator();
+
             switch (GameControll.GetFirstParametr(userInput.ToLowerInvariant()))
             {
                 case "create":
@@ -84,7 +91,7 @@ namespace TextBasedRPG.Classes.GameControll
                         Console.WriteLine("Comands possible here with create:\n" +
                                         "create hero");
                     }
-                    else if (GameControll.GetLastParametr(userInput.ToLowerInvariant()) == "create")
+                    else if (GameControll.GetLastParametr(userInput.ToLowerInvariant()) == "show")
                     {
                         Console.WriteLine("Comands possible here with show:\n" +
                                         "show characters");
@@ -142,6 +149,7 @@ namespace TextBasedRPG.Classes.GameControll
         public static void GetUserInputPlay(Hero h)
         {
             string userInput = Console.ReadLine();
+            WriteMethods.WriteSeparator();
 
             string firstParametr = GameControll.GetFirstParametr(userInput.ToLowerInvariant());
             string lastParametr = GameControll.GetLastParametr(userInput.ToLowerInvariant());
@@ -165,6 +173,10 @@ namespace TextBasedRPG.Classes.GameControll
                     {
                         h.DisplayGear();
                     }
+                    else if (lastParametr == "location")
+                    {
+                        h.GetLocation().DisplayInformation();
+                    }
                     else ComandNotFoundMessage();
                     break;
                 case "help":
@@ -172,6 +184,8 @@ namespace TextBasedRPG.Classes.GameControll
                     {
                         Console.WriteLine("Comands possible here:\n" +
                                         "show... \n" +
+                                        "goto + location name (e.q goto MainTownMarket\n" +
+                                        "findenemies + place name (e.q findenemies GoblinVillage)\n" +
                                         "\"Try typing \"help show\" to get more information\"");
                         WriteMethods.WriteSeparator();
                     }
@@ -181,9 +195,48 @@ namespace TextBasedRPG.Classes.GameControll
                                         "show equipment\n" +
                                         "show pocket\n" +
                                         "show stats\n" +
-                                        "show gear");
+                                        "show gear\n" +
+                                        "show location");
                         WriteMethods.WriteSeparator();
-                    }else ComandNotFoundMessage();
+                    }
+                    else ComandNotFoundMessage();
+                    break;
+                case "goto":
+                    bool exists = false;
+                    for(int i = 0; i < h.GetLocation().locationsNear.Count; i++)
+                    {
+                        if (h.GetLocation().locationsNear[i].name.ToLowerInvariant() == lastParametr.ToLowerInvariant())
+                        {
+                            Console.WriteLine("You went to " + h.GetLocation().locationsNear[i].name);
+                            h.SetLocation(h.GetLocation().locationsNear[i]);
+                            WriteMethods.WriteSeparator();
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) Console.WriteLine("There is not location named " + lastParametr + "/ location does not exists");
+                    break;
+                case "findenemies":
+                    foreach (Place p in h.GetLocation().places)
+                    {
+                        if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind == PlaceKind.MONSTER_PLACE)
+                        {
+                            MonstersPlace monstersPlace = (MonstersPlace)p;
+                            switch (monstersPlace.monsters[random.Next(0, monstersPlace.monsters.Count - 1)])
+                            {
+                                case "Goblin":
+                                    Fight.PreformFight(h, MonsterGenerator.Goblin());
+                                    break;
+                                default: Console.WriteLine("Something went wrong"); break;
+                            }
+                            break;
+                        }
+                        else if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind != PlaceKind.MONSTER_PLACE)
+                        {
+                            Console.WriteLine("There are no monsters! (This is not \"Monster place\""); break;
+                        }
+                        else Console.WriteLine("Could not find place");
+                    }
                     break;
                 default:
                     ComandNotFoundMessage();

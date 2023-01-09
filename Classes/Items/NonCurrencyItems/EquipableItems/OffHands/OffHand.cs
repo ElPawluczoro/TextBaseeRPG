@@ -21,7 +21,7 @@ namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands
             this.armour = a;
         }
 
-        public void DisplayInformation()
+        public override void DisplayInformation()
         {
             base.DisplayInformation();
             if (this.damage != 0) Console.WriteLine("Damage: " + this.damage);

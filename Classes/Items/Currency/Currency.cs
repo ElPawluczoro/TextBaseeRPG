@@ -27,7 +27,7 @@ namespace TextBasedRPG.Classes.Items.Currency
             return this.quantity;
         }
 
-        public void DisplayInformation()
+        public override void DisplayInformation()
         {
             base.DisplayInformation();
             Console.WriteLine("Quantity: " + this.GetQuantity());

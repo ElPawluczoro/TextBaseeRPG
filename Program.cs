@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TextBasedRPG.Classes.Fight;
+using TextBasedRPG.Classes.Fighting;
 using TextBasedRPG.Classes.GameControll;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
@@ -20,6 +20,7 @@ namespace TextBasedRPG
         static void Main(string[] args)
         {
             Console.WriteLine("If you are confused try typing \"help\"");
+            PlayerControll.CreateNewHero("Danik");
             while (true)
             {
                 GameControll.GetUserInputMenu();

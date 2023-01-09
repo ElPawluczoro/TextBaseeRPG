@@ -19,7 +19,8 @@ namespace TextBasedRPG.Classes.Locations
         public Shop(string n, List<NonCurrencyItem> g)
         {
             this.goods = g;
-            this.name = n;
+            this._name = n;
+            this._placeKind = Places.PlaceKind.SHOP;
         }
 
         public void DisplayGoods()

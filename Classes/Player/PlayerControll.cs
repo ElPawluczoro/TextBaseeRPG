@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Heroes;
+using TextBasedRPG.Classes.World;
 
 namespace TextBasedRPG.Classes.Player
 {
@@ -17,8 +18,10 @@ namespace TextBasedRPG.Classes.Player
         public static void CreateNewHero()
           
         {
+            WorldGenerator.GenerateWorld(); //maybe will change TODO
+
             Console.WriteLine("Create new hero: \nChoose class:\n(Warrior)");
-            string heroClass = Console.ReadLine();
+            string heroClass = Console.ReadLine().ToLowerInvariant();
             Console.WriteLine("Choose name for your hero");
             string name = Console.ReadLine();
             switch (heroClass){
@@ -34,6 +37,35 @@ namespace TextBasedRPG.Classes.Player
                     Console.WriteLine("Could not create new hero");
                     break;
             }
+            heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
+        }
+
+        public static void CreateNewHero(string n)
+
+        {
+            WorldGenerator.GenerateWorld(); //maybe will change TODO
+
+            Console.WriteLine("Create new hero: \nChoose class:\n(Warrior)");
+            string heroClass = "warrior";
+            Console.WriteLine("Choose name for your hero");
+            string name = n;
+            switch (heroClass)
+            {
+                case "warrior":
+                case "WARRIOR":
+                case "Warrior":
+                    if (heroes.Count < maxHeroes)
+                    {
+                        heroes.Add(new Warrior(name));
+                        Console.WriteLine("Hero succesfully created");
+                    }
+                    else Console.WriteLine("You can not have more heroes");
+                    break;
+                default:
+                    Console.WriteLine("Could not create new hero");
+                    break;
+            }
+            heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
         }
 
         public static List<Hero> GetHeroesList()

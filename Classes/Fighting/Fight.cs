@@ -9,7 +9,7 @@ using TextBasedRPG.Classes.Items.Currency;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Monsters;
 
-namespace TextBasedRPG.Classes.Fight
+namespace TextBasedRPG.Classes.Fighting
 {
     internal class Fight
     {
@@ -41,11 +41,12 @@ namespace TextBasedRPG.Classes.Fight
             {
                 NonCurrencyItem item = (NonCurrencyItem)lootItem;
                 h.AddToEquipment(item);
-                Console.Write("You have got:\n" +
-                        m.GetExpieriencePointsGiven() + "xp\n");
-                        lootItem.DisplayInformation();
-                WriteMethods.WriteSeparator();
             }
+            h.GiveExpieriencePoints(m.GetExpieriencePointsGiven());
+            Console.Write("You have got:\n" +
+                    m.GetExpieriencePointsGiven() + "xp\n");
+            lootItem.DisplayInformation();
+            WriteMethods.WriteSeparator();
 
 
 

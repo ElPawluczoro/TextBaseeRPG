@@ -23,6 +23,11 @@ namespace TextBasedRPG.Classes.Items
             return quantity;
         }
 
+        public void SetQuantity(int q)
+        {
+            this.quantity = q;
+        }
+
         public override void DisplayInformation()
         {
             base.DisplayInformation();

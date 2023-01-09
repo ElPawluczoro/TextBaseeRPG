@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using TextBasedRPG.Classes.GeneralClasses;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
+using TextBasedRPG.Classes.Locations;
+using TextBasedRPG.Classes.World;
+
 namespace TextBasedRPG.Classes.Unit
 {
     internal abstract class Hero : Unit
@@ -70,6 +73,16 @@ namespace TextBasedRPG.Classes.Unit
         public List<NonCurrencyItem> GetEquipment()
         {
             return this.equipment;
+        }
+
+        public Location GetLocation()
+        {
+            return location;
+        }
+
+        public void SetLocation(Location location)
+        {
+            this.location = location;
         }
 
         public void SetMaxExpieriencePoints()
@@ -244,7 +257,28 @@ namespace TextBasedRPG.Classes.Unit
 
         public void AddToEquipment(NonCurrencyItem item)
         {
-            equipment.Add(item);
+            if (item.GetItemKind() != ItemKind.LOOT_OBJECT)
+            {
+                this.equipment.Add(item);
+            }
+            else
+            {
+                int i = 0;
+                bool exists = false;
+                LootObject lo = null;
+                LootObject lootObject = null;
+                foreach (NonCurrencyItem it in this.equipment)
+                {
+                    if(it.GetName() == item.GetName() && it.GetItemKind() == ItemKind.LOOT_OBJECT)
+                    {
+                        exists = true;
+                        lo = (LootObject)it;
+                        lootObject = (LootObject)item;
+                    }
+                }
+                if (exists) this.equipment[i] = new LootObject(lo.GetName(), lo.GetValue(), lo.GetQuantity() + lootObject.GetQuantity());
+                else this.equipment.Add(item);
+            }
         }
 
         public void RemoveFromEquipment(int i)
