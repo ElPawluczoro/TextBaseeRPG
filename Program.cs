@@ -21,6 +21,7 @@ namespace TextBasedRPG
         {
             Console.WriteLine("If you are confused try typing \"help\"");
             PlayerControll.CreateNewHero("Danik");
+            
             while (true)
             {
                 GameControll.GetUserInputMenu();

@@ -11,6 +11,7 @@ using TextBasedRPG.Classes.Player;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Monsters;
 using TextBasedRPG.Classes.Fighting;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TextBasedRPG.Classes.GameControll
 {
@@ -128,7 +129,7 @@ namespace TextBasedRPG.Classes.GameControll
                     if(lastParametr != "play")
                     {
                         bool exists = false;
-                        try
+                        try //z jakiegoś powodu po śmeirci heros w "preformFight" program wpada tutaj i daltego jest ten blok try catch
                         {
                             foreach (Hero h in PlayerControll.GetHeroesList())
                             {
@@ -203,14 +204,14 @@ namespace TextBasedRPG.Classes.GameControll
                         Console.WriteLine("Comands possible here:\n" +
                                         "show... \n" +
                                         "goto + location name (e.q goto MainTownMarket\n" +
-                                        "findenemies + place name (e.q findenemies GoblinVillage)\n" +
+                                        "findenemies\\fe + place name (e.q findenemies GoblinVillage)\n" +
                                         "\"Try typing \"help show\" to get more information\"");
                         WriteMethods.WriteSeparator();
                     }
                     else if(lastParametr == "show")
                     {
                         Console.WriteLine("Comands possible here with show:\n" +
-                                        "show equipment\n" +
+                                        "show equipment\\eq \n" +
                                         "show pocket\n" +
                                         "show stats\n" +
                                         "show gear\n" +
@@ -235,12 +236,13 @@ namespace TextBasedRPG.Classes.GameControll
                     if (!exists) Console.WriteLine("There is not location named " + lastParametr + "/ location does not exists");
                     break;
                 case "findenemies":
-                    Place place = null;
+                case "fe":
+                    Place monsterPlace = null;
                     foreach (Place p in h.GetLocation().places)
                     {
                         if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind == PlaceKind.MONSTER_PLACE)
                         {
-                            place = p;
+                            monsterPlace = p;
                             break;
                         }
                         else if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind != PlaceKind.MONSTER_PLACE)
@@ -249,9 +251,9 @@ namespace TextBasedRPG.Classes.GameControll
                         }
                         else Console.WriteLine("Could not find place");
                     }
-                    if (place != null)
+                    if (monsterPlace != null)
                     {
-                        MonstersPlace monstersPlace = (MonstersPlace)place;
+                        MonstersPlace monstersPlace = (MonstersPlace)monsterPlace;
                         switch (monstersPlace.monsters[random.Next(0, monstersPlace.monsters.Count - 1)])
                         {
                             case "Goblin":
@@ -261,6 +263,23 @@ namespace TextBasedRPG.Classes.GameControll
                         }
                     }
                     break;
+                case "visit":
+                case "v":
+                    Place place = null;
+                    foreach (Place p in h.GetLocation().places)
+                    {
+                        if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind == PlaceKind.SHOP)
+                        {
+                            place = p;
+                            Console.WriteLine("You are visiting " + p.name);
+                            while (!VisitShop(p, h)) ;
+                            break;
+                        }else if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind != PlaceKind.SHOP)
+                        {
+                            Console.WriteLine("You can not visit that place");
+                        }
+                    }
+                        break;
                 default:
                     ComandNotFoundMessage();
                     break;
@@ -271,8 +290,55 @@ namespace TextBasedRPG.Classes.GameControll
 
         }
 
+        public static bool VisitShop(Place p, Hero h)
+        {
+            bool exit = false;
 
+            Shop shop = (Shop)p;
+
+            string userInput = Console.ReadLine();
+
+            string firstParametr = GameControll.GetFirstParametr(userInput.ToLowerInvariant());
+            string lastParametr = GameControll.GetLastParametr(userInput.ToLowerInvariant());
+            try
+            {
+                switch (firstParametr)
+                {
+                    case "show":
+                        if (lastParametr == "goods")
+                        {
+                            shop.DisplayGoods();
+                        }
+                        break;
+                    case "buy":
+                        shop.Buy(Int32.Parse(lastParametr), h);
+                        break;
+                    case "sell":
+                        shop.Sell(Int32.Parse(lastParametr), h);
+                        break;
+                    case "exit":
+                        exit = true;
+                        break;
+                    case "help":
+                        Console.WriteLine("show goods\n" +
+                                "buy + item index (e.g buy 2)\n" +
+                                "sell + item index (e.q sell)" +
+                                "exit");
+                        WriteMethods.WriteSeparator();
+                        break;
+                    default:
+                        ComandNotFoundMessage();
+                        break;
+                }
+            }
+            catch(System.FormatException e)
+            {
+                Console.WriteLine("Secon argument (last) must be a number!");
+            }
+            return exit;
         }
+
+    }
 }
 
 

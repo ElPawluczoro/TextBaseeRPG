@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using TextBasedRPG.Classes.Items;
+using TextBasedRPG.Classes.Items.Currency;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Heroes;
 using TextBasedRPG.Classes.World;
@@ -55,7 +57,7 @@ namespace TextBasedRPG.Classes.Player
             }
             heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
         }
-        public static void CreateNewHero(string n)
+        public static void CreateNewHero(string n)//for tests
 
         {
             WorldGenerator.GenerateWorld(); //maybe will change TODO
@@ -73,6 +75,8 @@ namespace TextBasedRPG.Classes.Player
                     {
                         heroes.Add(new Warrior(name));
                         Console.WriteLine("Hero succesfully created");
+                        heroes[0].AddToPocket(new Coins(50));
+                        heroes[0].AddToEquipment(new LootObject("Totem", 5, 1));
                     }
                     else if(heroes.Count < maxHeroes && !IsNameAvaiable(n))
                     {

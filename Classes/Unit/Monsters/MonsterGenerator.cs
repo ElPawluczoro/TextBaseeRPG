@@ -27,6 +27,14 @@ namespace TextBasedRPG.Classes.Unit.Monsters
             return new Monster("Goblin", 10, 5, 3, dropList);
         }
 
+        public static Monster Orc()
+        {
+            List<Item> dropList = new List<Item>();
+            dropList.Add(new Coins(random.Next(2, 4)));
+            dropList.Add(new LootObject("Orc teeth", 4, 1));
+            return new Monster("Orc", 17, 5, 5, dropList);
+        }
+
 
 
     }
