@@ -61,13 +61,17 @@ namespace TextBasedRPG.Classes.GameControll
 
         public static void GetUserInputMenu()
         {
-            string userInput = Console.ReadLine();
+            string userInput = "";
+            userInput = Console.ReadLine();
             WriteMethods.WriteSeparator();
 
-            switch (GameControll.GetFirstParametr(userInput.ToLowerInvariant()))
+            string firstParametr = GameControll.GetFirstParametr(userInput.ToLowerInvariant());
+            string lastParametr = GameControll.GetLastParametr(userInput.ToLowerInvariant());
+
+            switch (firstParametr)
             {
                 case "create":
-                    if (GameControll.GetLastParametr(userInput.ToLowerInvariant()) == "hero")
+                    if (lastParametr == "hero")
                     {
                         PlayerControll.CreateNewHero();
                         PlayerControll.DisplayHeroesList();
@@ -77,21 +81,28 @@ namespace TextBasedRPG.Classes.GameControll
                         ComandNotFoundMessage();
                     }
                     break;
+                case "delete":
+                    if (PlayerControll.DeleteHero(lastParametr))
+                    {
+                        Console.WriteLine("Hero with name " + lastParametr + " succesfully deleted");
+                    }
+                    break;
                 case "help":
-                    if (GameControll.GetLastParametr(userInput.ToLowerInvariant()) == "help")
+                    if (lastParametr == "help")
                     {
                         Console.WriteLine("Comands possible here:\n" +
                                     "create...\n" +
                                     "show...\n" +
-                                    "play + hero name (e.g \"Play Stefan\")\n" +
+                                    "play + hero name (e.g \"play Stefan\")\n" +
+                                    "delete + hero name(e.g \"delete Stefan\")\n" +
                                     "Try typing \"help create\" to get more information");
                     }
-                    else if (GameControll.GetLastParametr(userInput.ToLowerInvariant()) == "create")
+                    else if (lastParametr == "create")
                     {
                         Console.WriteLine("Comands possible here with create:\n" +
                                         "create hero");
                     }
-                    else if (GameControll.GetLastParametr(userInput.ToLowerInvariant()) == "show")
+                    else if (lastParametr == "show")
                     {
                         Console.WriteLine("Comands possible here with show:\n" +
                                         "show characters");
@@ -104,7 +115,7 @@ namespace TextBasedRPG.Classes.GameControll
                     WriteMethods.WriteSeparator();
                     break;
                 case "show":
-                    if(GameControll.GetLastParametr(userInput.ToLowerInvariant()) == "characters")
+                    if(lastParametr == "characters")
                     {
                         PlayerControll.DisplayHeroesList();
                     }
@@ -114,17 +125,24 @@ namespace TextBasedRPG.Classes.GameControll
                     }
                     break;
                 case "play":
-                    if(GameControll.GetLastParametr(userInput.ToLowerInvariant()) != "play")
+                    if(lastParametr != "play")
                     {
                         bool exists = false;
-                        foreach(Hero h in PlayerControll.GetHeroesList())
+                        try
                         {
-                            if (h.GetName().ToLowerInvariant() == GameControll.GetLastParametr(userInput.ToLowerInvariant()))
+                            foreach (Hero h in PlayerControll.GetHeroesList())
                             {
-                                exists = true;
-                                Play(h);
+                                if (h.GetName().ToLowerInvariant() == lastParametr)
+                                {
+                                    exists = true;
+                                    Play(h);
+                                }
                             }
+                        }catch(System.InvalidOperationException e)
+                        {
+                            Console.WriteLine("Returned to Main Menu");
                         }
+
                         if (!exists)
                         {
                             Console.WriteLine("Hero with this name not found");
@@ -140,7 +158,7 @@ namespace TextBasedRPG.Classes.GameControll
         public static void Play(Hero h)
         {
             Console.WriteLine("Playing with " + h.GetName());
-            while (true)
+            while (PlayerControll.GetHeroesList().Contains(h))
             {
                 GetUserInputPlay(h);
             }
@@ -217,18 +235,12 @@ namespace TextBasedRPG.Classes.GameControll
                     if (!exists) Console.WriteLine("There is not location named " + lastParametr + "/ location does not exists");
                     break;
                 case "findenemies":
+                    Place place = null;
                     foreach (Place p in h.GetLocation().places)
                     {
                         if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind == PlaceKind.MONSTER_PLACE)
                         {
-                            MonstersPlace monstersPlace = (MonstersPlace)p;
-                            switch (monstersPlace.monsters[random.Next(0, monstersPlace.monsters.Count - 1)])
-                            {
-                                case "Goblin":
-                                    Fight.PreformFight(h, MonsterGenerator.Goblin());
-                                    break;
-                                default: Console.WriteLine("Something went wrong"); break;
-                            }
+                            place = p;
                             break;
                         }
                         else if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind != PlaceKind.MONSTER_PLACE)
@@ -236,6 +248,17 @@ namespace TextBasedRPG.Classes.GameControll
                             Console.WriteLine("There are no monsters! (This is not \"Monster place\""); break;
                         }
                         else Console.WriteLine("Could not find place");
+                    }
+                    if (place != null)
+                    {
+                        MonstersPlace monstersPlace = (MonstersPlace)place;
+                        switch (monstersPlace.monsters[random.Next(0, monstersPlace.monsters.Count - 1)])
+                        {
+                            case "Goblin":
+                                Fight.PreformFight(h, MonsterGenerator.Goblin());
+                                break;
+                            default: Console.WriteLine("Something went wrong"); break;
+                        }
                     }
                     break;
                 default:

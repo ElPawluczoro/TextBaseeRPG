@@ -15,8 +15,21 @@ namespace TextBasedRPG.Classes.Player
     {
         private static List<Hero> heroes = new List<Hero>(); //max 10
         private static int maxHeroes = 10;
+
+        public static bool IsNameAvaiable(string name)
+        {
+            bool isAvaiable = true;
+            foreach (Hero h in heroes)
+            {
+                if (h.GetName() == name) isAvaiable = false;
+            }
+            return isAvaiable;
+
+        }
+
         public static void CreateNewHero()
           
+
         {
             WorldGenerator.GenerateWorld(); //maybe will change TODO
 
@@ -26,10 +39,13 @@ namespace TextBasedRPG.Classes.Player
             string name = Console.ReadLine();
             switch (heroClass){
                 case "warrior": case "WARRIOR": case "Warrior":
-                    if (heroes.Count < maxHeroes)
+                    if (heroes.Count < maxHeroes && IsNameAvaiable(name))
                     {
                         heroes.Add(new Warrior(name));
                         Console.WriteLine("Hero succesfully created");
+                    }
+                    else if(heroes.Count < maxHeroes && !IsNameAvaiable(name)){
+                        Console.WriteLine("You can not have two heroes with the same name!");
                     }
                     else Console.WriteLine("You can not have more heroes");
                     break;
@@ -39,7 +55,6 @@ namespace TextBasedRPG.Classes.Player
             }
             heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
         }
-
         public static void CreateNewHero(string n)
 
         {
@@ -54,10 +69,14 @@ namespace TextBasedRPG.Classes.Player
                 case "warrior":
                 case "WARRIOR":
                 case "Warrior":
-                    if (heroes.Count < maxHeroes)
+                    if (heroes.Count < maxHeroes && IsNameAvaiable(n))
                     {
                         heroes.Add(new Warrior(name));
                         Console.WriteLine("Hero succesfully created");
+                    }
+                    else if(heroes.Count < maxHeroes && !IsNameAvaiable(n))
+                    {
+                        Console.WriteLine("You can not have two heroes with the same name!");
                     }
                     else Console.WriteLine("You can not have more heroes");
                     break;
@@ -84,7 +103,21 @@ namespace TextBasedRPG.Classes.Player
             }
         }
 
-
+        public static bool DeleteHero(string name)
+        {
+            Hero heroToDelete = null;
+            bool deleted = false;
+            foreach(Hero h in heroes)
+            {
+                if (h.GetName().ToLowerInvariant() == name)
+                {
+                    heroToDelete = h;
+                    deleted = true;
+                }
+            }
+            heroes.Remove(heroToDelete);
+            return deleted;
+        }
 
 
 

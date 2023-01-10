@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TextBasedRPG.Classes.GeneralClasses;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
+using TextBasedRPG.Classes.Player;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Monsters;
 
@@ -17,12 +18,17 @@ namespace TextBasedRPG.Classes.Fighting
 
         public static void PreformFight(Hero h, Monster m)
         {
-            while(h.IsAlive() && m.IsAlive())
+            while (h.IsAlive() && m.IsAlive())
             {
                 h.DealDamage(m);
                 m.DealDamage(h);
             }
             if (!m.IsAlive()) Fight.GiveLoot(h, m);
+            if (!h.IsAlive())
+            {
+                PlayerControll.DeleteHero(h.GetName().ToLowerInvariant());
+                Console.WriteLine("Your hero died...");
+            }
         }
 
         public static  void GiveLoot(Hero h, Monster m)

@@ -24,7 +24,7 @@ namespace TextBasedRPG.Classes.Unit.Monsters
             dropList.Add(new Coins(random.Next(1, 3)));
             dropList.Add(new LootObject("Goblin Totem", 2, random.Next(1, 2)));
             dropList.Add(null);
-            return new Monster("Goblin", 10, 2, 3, dropList);
+            return new Monster("Goblin", 10, 5, 3, dropList);
         }
 
 
