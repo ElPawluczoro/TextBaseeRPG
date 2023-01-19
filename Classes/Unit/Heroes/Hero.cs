@@ -47,6 +47,9 @@ namespace TextBasedRPG.Classes.Unit
             this.expieriencePoints = 0;
         }
 
+        public abstract void CalculateDamage();
+        public abstract void CalculateHealthPoints();
+
         public override void DisplayInformation()
         {
             base.DisplayInformation();

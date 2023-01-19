@@ -9,6 +9,7 @@ using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Heroes;
+using TextBasedRPG.Classes.Unit.Heroes.Classes;
 using TextBasedRPG.Classes.World;
 
 namespace TextBasedRPG.Classes.Player
@@ -30,32 +31,37 @@ namespace TextBasedRPG.Classes.Player
         }
 
         public static void CreateNewHero()
-          
-
         {
+            bool succesfullyCreated = true;
+
             WorldGenerator.GenerateWorld(); //maybe will change TODO
 
-            Console.WriteLine("Create new hero: \nChoose class:\n(Warrior)");
+            Console.WriteLine("Create new hero: \nChoose class:\n(Warrior)\n(Archer)\n(Monk)\n(Witch)\n(Wizard)");
             string heroClass = Console.ReadLine().ToLowerInvariant();
             Console.WriteLine("Choose name for your hero");
             string name = Console.ReadLine();
-            switch (heroClass){
-                case "warrior": case "WARRIOR": case "Warrior":
-                    if (heroes.Count < maxHeroes && IsNameAvaiable(name))
+                if (heroes.Count < maxHeroes && IsNameAvaiable(name))
+                {
+                    switch (heroClass.ToLowerInvariant())
                     {
-                        heroes.Add(new Warrior(name));
-                        Console.WriteLine("Hero succesfully created");
+                    case "warrior": heroes.Add(new Warrior(name)); break;
+                    case "archer": heroes.Add(new Archer(name)); break;
+                    case "monk": heroes.Add(new Monk(name)); break;
+                    case "witch": heroes.Add(new Witch(name)); break;
+                    case "wizard": heroes.Add(new Wizard(name)); break;
+                    default: succesfullyCreated = false; break;
                     }
-                    else if(heroes.Count < maxHeroes && !IsNameAvaiable(name)){
-                        Console.WriteLine("You can not have two heroes with the same name!");
-                    }
-                    else Console.WriteLine("You can not have more heroes");
-                    break;
-                default:
-                    Console.WriteLine("Could not create new hero");
-                    break;
+                    heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
+                }
+                else if(heroes.Count < maxHeroes && !IsNameAvaiable(name)){
+                    Console.WriteLine("You can not have two heroes with the same name!");
+                }
+                else Console.WriteLine("You can not have more heroes");
+
+            if (!succesfullyCreated)
+            {
+                Console.WriteLine("This class do not exists!");
             }
-            heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
         }
         public static void CreateNewHero(string n)//for tests
 

@@ -15,14 +15,14 @@ namespace TextBasedRPG.Classes.Unit.Heroes
             this.className = "Warrior";
         }
 
-        public void CalculateDamage()
+        public override void CalculateDamage()
         {
             Weapon weapon = (Weapon)this.mainHand;
             OffHand offHand = (OffHand)this.offHand;
             this.damage = strenght * 0.6f + (weapon.GetDamage() + offHand.GetDamage()) * strenght * 1.1f;
         }
 
-        public void CalculateHealthPoints()
+        public override void CalculateHealthPoints()
         {
             this.healthPoints = stamina * 3;
         }
