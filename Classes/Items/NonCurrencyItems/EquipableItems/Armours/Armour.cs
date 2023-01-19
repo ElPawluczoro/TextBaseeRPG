@@ -8,14 +8,19 @@ using TextBasedRPG.Classes.Unit;
 
 namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.Armours
 {
-    internal abstract class Armour :EquipableItem
+    internal class Armour :EquipableItem
     {
         protected ArmourKind armourKind;
-        public Armour(int a, int hp, string n, int v, Level rq, ArmourKind ak) : base(n, v, rq)
+        public Armour(int stamina, int strength, int agility, int intelligence,
+                    int fireResistance, int coldResistance, int chaosResistance, int armour,
+                    string name, int value, Level rq, ArmourKind armourKind, ItemKind itemKind)
+                    : 
+                    base(stamina, strength, agility, intelligence, 
+                          fireResistance, coldResistance, chaosResistance, armour,
+                          name, value, rq)
         {
-            this.armour = a;
-            this.healthPoints = hp;
-            this.armourKind = ak;
+            this.armourKind = armourKind;
+            this.itemKind = itemKind;
         }
 
         public ArmourKind GetArmourKind()
@@ -27,8 +32,6 @@ namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.Armours
         {
             base.DisplayInformation();
             Console.WriteLine(ArmourMethods.ArmourKindToString(this.armourKind));
-            if (this.armour != 0) Console.WriteLine("Armour: " + this.armour);
-            if (this.healthPoints != 0) Console.WriteLine("HP: " + this.healthPoints);
             WriteMethods.WriteSeparator();
         }
 

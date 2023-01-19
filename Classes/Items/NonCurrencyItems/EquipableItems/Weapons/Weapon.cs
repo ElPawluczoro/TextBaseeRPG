@@ -8,13 +8,21 @@ using TextBasedRPG.Classes.Unit;
 
 namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems
 {
-    internal abstract class Weapon : EquipableItem
+    internal class Weapon : EquipableItem
     {
+        protected float damage;
+
         protected WeaponKind weaponKind;
-        public Weapon(int d, string n, int v, Level rq) : base(n, v, rq)
+        public Weapon(int stamina, int strenght, int agility, int intelligence, 
+            int fireResistance, int coldResistance, int chaosResistance, int armour,
+            string n, int v, Level rq, float damage, WeaponKind weaponKind) 
+            : 
+            base(stamina, strenght, agility, intelligence, 
+                fireResistance, coldResistance, chaosResistance, armour, n, v, rq)
         {
-            this.kind = ItemKind.WEAPON;
-            this.damage = d;
+            this.itemKind = ItemKind.WEAPON;
+            this.weaponKind = weaponKind;
+            this.damage = damage;
         }
 
         public override void DisplayInformation()
@@ -22,6 +30,11 @@ namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems
             base.DisplayInformation();
             Console.WriteLine("Damage: " + this.damage);
             WriteMethods.WriteSeparator();
+        }
+
+        public float GetDamage()
+        {
+            return this.damage;
         }
 
 

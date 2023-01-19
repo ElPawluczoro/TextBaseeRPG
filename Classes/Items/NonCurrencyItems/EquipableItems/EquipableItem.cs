@@ -12,36 +12,48 @@ namespace TextBasedRPG.Classes.Items
     {
         protected Level requaierdLevel;
 
-        protected int damage;
-        protected int healthPoints;
+        protected int stamina;
+        protected int strenght;
+        protected int agility;
+        protected int intelligence;
+        protected int fireResistance;
+        protected int coldResistance;
+        protected int chaosResistance;
         protected int armour;
 
-        public EquipableItem(string n, int v, Level rq)
+        public EquipableItem(int stamina, int strenght, int agility, int intelligence,
+            int fireResistance, int coldResistance, int chaosResistance, int armour,
+            string name, int value, Level rq)
         {
-            this.name = n;
-            this.value = v;
-            this.requaierdLevel = rq;
-        }
+            this.stamina = stamina;
+            this.strenght = strenght;
+            this.agility = agility;
+            this.intelligence = intelligence;
+            this.fireResistance = fireResistance;
+            this.coldResistance = coldResistance;
+            this.chaosResistance = chaosResistance;
+            this.armour = armour;
 
-        public int GetDamage()
-        {
-            return this.damage;
+            this.name = name;
+            this.value = value;
+            this.requaierdLevel = rq;
         }
 
         public int GetArmour()
         {
-            return this.armour;
+            return armour;
         }
 
-        public int GetHealthPoints()
+        public int GetStamina()
         {
-            return this.healthPoints;
+            return stamina;
         }
 
         public override void DisplayInformation()
         {
             base.DisplayInformation();
             Console.WriteLine("Requaierd Level: " + HeroMethods.LevelToInt(this.requaierdLevel));
+            if (this.armour != 0) Console.WriteLine("Armour: " + this.armour);
         }
 
     }

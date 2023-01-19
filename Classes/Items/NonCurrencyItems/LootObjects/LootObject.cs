@@ -15,7 +15,7 @@ namespace TextBasedRPG.Classes.Items
             this.name = n;
             this.value = v;
             this.quantity = q;
-            this.kind = ItemKind.LOOT_OBJECT;
+            this.itemKind = ItemKind.LOOT_OBJECT;
         }
 
         public int GetQuantity()

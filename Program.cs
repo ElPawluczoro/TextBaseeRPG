@@ -24,6 +24,7 @@ namespace TextBasedRPG
             
             while (true)
             {
+                
                 GameControll.GetUserInputMenu();
             }
 

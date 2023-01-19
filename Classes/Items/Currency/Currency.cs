@@ -14,7 +14,7 @@ namespace TextBasedRPG.Classes.Items.Currency
         public Currency(int q)
         {
             this.quantity = q;
-            this.kind = ItemKind.CURRENCY;
+            this.itemKind = ItemKind.CURRENCY;
         }
 
         public CurrencyType GetCurrencyType()

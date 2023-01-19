@@ -77,6 +77,7 @@ namespace TextBasedRPG.Classes.Player
                         Console.WriteLine("Hero succesfully created");
                         heroes[0].AddToPocket(new Coins(50));
                         heroes[0].AddToEquipment(new LootObject("Totem", 5, 1));
+                        heroes[0].AddToEquipment(GenerateItem.GenerateMeleWeapon(Level.LEVEL1));
                     }
                     else if(heroes.Count < maxHeroes && !IsNameAvaiable(n))
                     {

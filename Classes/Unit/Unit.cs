@@ -9,7 +9,7 @@ namespace TextBasedRPG.Classes.Unit
 {
     internal abstract class Unit
     {
-        protected int healthPoints;
+        /*protected int healthPoints;
         protected int damage;
         protected int armour;
         protected string name;
@@ -18,6 +18,33 @@ namespace TextBasedRPG.Classes.Unit
         {
             healthPoints = hp;
             damage = dmg;
+        }*/
+
+        //stats
+        protected int stamina;
+        protected int strenght;
+        protected int agility;
+        protected int inteligence;
+        protected int armour;
+        protected int fireResistance;
+        protected int coldResistance;
+        protected int chaosResistance;
+
+        protected float healthPoints;
+        protected float damage;
+
+        protected string name;
+
+        public Unit(string name, int stamina, int strenght, int agility, int inteligence, 
+                    int armour, int fireResistance, int coldResistance, int chaosResistance)
+        {
+            this.name = name;
+            this.agility = agility;
+            this.inteligence = inteligence;
+            this.armour = armour;
+            this.fireResistance = fireResistance;
+            this.coldResistance = coldResistance;
+            this.chaosResistance = chaosResistance;
         }
 
         public virtual void DisplayInformation()
@@ -39,13 +66,13 @@ namespace TextBasedRPG.Classes.Unit
             return name;
         }
 
-        public void GetDamage(int d)
+        public void GetDamage(float d)
         {
             if(d>this.armour) this.healthPoints-=(d-this.armour);
             DisplayInformation();
         }
 
-        public int ReturnDamage()
+        public float ReturnDamage()
         {
             return this.damage;
         }

@@ -18,7 +18,11 @@ namespace TextBasedRPG.Classes.Unit.Monsters
 
         protected Random random = new Random();
 
-        public Monster(string name, int hp, int dmg, int exp, List<Item> dropList) : base(hp, dmg)
+        public Monster(string name, int stamina, int strenght, int agility, int intelligence, 
+                    int armour, int fireResistance, int coldResistance, int chaosResistance, int exp, List<Item> dropList) 
+                    : 
+                    base(name, stamina, strenght, agility, intelligence,
+                    armour, fireResistance, coldResistance, chaosResistance)
         {
             this.name = name;
             this.dropList = dropList;

@@ -12,6 +12,7 @@ using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Monsters;
 using TextBasedRPG.Classes.Fighting;
 using System.Security.Cryptography.X509Certificates;
+using TextBasedRPG.Classes.Items;
 
 namespace TextBasedRPG.Classes.GameControll
 {
@@ -204,7 +205,8 @@ namespace TextBasedRPG.Classes.GameControll
                         Console.WriteLine("Comands possible here:\n" +
                                         "show... \n" +
                                         "goto + location name (e.q goto MainTownMarket\n" +
-                                        "findenemies\\fe + place name (e.q findenemies GoblinVillage)\n" +
+                                        "findenemies/fe + place name (e.q findenemies GoblinVillage)\n" +
+                                        "equip/e + item index in equipment" +
                                         "\"Try typing \"help show\" to get more information\"");
                         WriteMethods.WriteSeparator();
                     }
@@ -280,10 +282,27 @@ namespace TextBasedRPG.Classes.GameControll
                         }
                     }
                         break;
+                case "equip": 
+                case "e":
+                    try {
+                        int itemIndex = int.Parse(lastParametr);
+                        h.EquipItem(itemIndex);
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Console.WriteLine("You must provide a number as second argument");
+                    }
+                    catch(System.InvalidCastException e)
+                    {
+                        Console.WriteLine("You can not equip that!");
+                    }
+                    WriteMethods.WriteSeparator();
+                    break;
+
                 default:
                     ComandNotFoundMessage();
                     break;
-            }
+                    }
 
 
 
@@ -333,7 +352,7 @@ namespace TextBasedRPG.Classes.GameControll
             }
             catch(System.FormatException e)
             {
-                Console.WriteLine("Secon argument (last) must be a number!");
+                Console.WriteLine("Second argument (last) must be a number!");
             }
             return exit;
         }

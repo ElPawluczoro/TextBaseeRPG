@@ -24,7 +24,7 @@ namespace TextBasedRPG.Classes.Unit.Monsters
             dropList.Add(new Coins(random.Next(1, 3)));
             dropList.Add(new LootObject("Goblin Totem", 2, random.Next(1, 2)));
             dropList.Add(null);
-            return new Monster("Goblin", 10, 5, 3, dropList);
+            return new Monster("Goblin", 10, 5, 5, 1, 2, 0, 0, 0, 3, dropList);
         }
 
         public static Monster Orc()
@@ -32,7 +32,7 @@ namespace TextBasedRPG.Classes.Unit.Monsters
             List<Item> dropList = new List<Item>();
             dropList.Add(new Coins(random.Next(2, 4)));
             dropList.Add(new LootObject("Orc teeth", 4, 1));
-            return new Monster("Orc", 17, 5, 5, dropList);
+            return new Monster("Orc", 20, 5, 5, 3, 1, 0, 0, 0, 5, dropList);
         }
 
 

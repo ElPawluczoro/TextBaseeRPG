@@ -10,7 +10,7 @@ namespace TextBasedRPG.Classes.Items
     internal abstract class Item
     {
         protected string name;
-        protected ItemKind kind;
+        protected ItemKind itemKind;
 
         public virtual void DisplayInformation()
         {
@@ -19,7 +19,7 @@ namespace TextBasedRPG.Classes.Items
 
         public ItemKind GetItemKind()
         {
-            return this.kind;
+            return this.itemKind;
         }
 
         public string GetName()

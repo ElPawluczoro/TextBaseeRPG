@@ -28,8 +28,8 @@ namespace TextBasedRPG.Classes.World
 
             blackSmithItems.Add(GenerateItem.GenerateMeleWeapon(Unit.Level.LEVEL2));
             blackSmithItems.Add(GenerateItem.GenerateMeleWeapon(Unit.Level.LEVEL2));
-            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL2, ItemKind.BODY_ARMOUR));
-            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL2, ItemKind.HEAD_ARMOUR));
+            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL1, ItemKind.BODY_ARMOUR));
+            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL1, ItemKind.HEAD_ARMOUR));
             blackSmithItems.Add(GenerateItem.GenerateOffHand(Unit.Level.LEVEL2));
             blackSmithItems.Add(GenerateItem.GenerateOffHand(Unit.Level.LEVEL2));
 

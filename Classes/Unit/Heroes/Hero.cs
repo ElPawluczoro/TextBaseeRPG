@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using TextBasedRPG.Classes.GeneralClasses;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
+using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems;
+using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands;
 using TextBasedRPG.Classes.Locations;
 using TextBasedRPG.Classes.World;
 
@@ -36,9 +38,9 @@ namespace TextBasedRPG.Classes.Unit
         protected int expieriencePoints;
         protected int maxExpieriencePoints;
 
-        public Hero(int hp, int dmg, string n) : base(hp, dmg)
+        public Hero(string name, int stamina, int strenght, int agility, int inteligence, int armour, int fireResistance, int coldResistance, int chaosResistance) : 
+            base (name, stamina, strenght, agility, inteligence, armour, fireResistance, coldResistance, chaosResistance)
         {
-            this.name = n;
 
             this.level = Level.LEVEL1;
             this.SetMaxExpieriencePoints();
@@ -97,15 +99,16 @@ namespace TextBasedRPG.Classes.Unit
 
             if (item.GetItemKind() == ItemKind.WEAPON)
             {
+                Weapon weapon = (Weapon)item;
                 this.mainHand = item;
-                this.damage += item.GetDamage();
+                this.damage += weapon.GetDamage();
                 this.RemoveFromEquipment(i);
             }else if (item.GetItemKind() == ItemKind.OFF_HAND)
             {
+                OffHand offHandItem = (OffHand)item;
                 this.offHand = item;
-                this.damage += item.GetDamage();
+                this.damage += offHandItem.GetDamage();
                 this.armour += item.GetArmour();
-                this.healthPoints += item.GetHealthPoints();
                 this.RemoveFromEquipment(i);
             }else if (armours.Contains(item.GetItemKind()))
             {
@@ -128,10 +131,9 @@ namespace TextBasedRPG.Classes.Unit
                         break;
                 }
                 this.armour += item.GetArmour();
-                this.healthPoints += item.GetHealthPoints();
-                this.damage += item.GetDamage();
                 this.RemoveFromEquipment(i);
             }
+            Console.WriteLine("You equiped " + item.GetName());
         }
 
         public void UnequipItem(ItemKind i)
@@ -140,15 +142,16 @@ namespace TextBasedRPG.Classes.Unit
 
             if (i == ItemKind.WEAPON)
             {
-                this.damage -= this.mainHand.GetDamage();
+                Weapon weapon = (Weapon)this.mainHand;
+                this.damage -= weapon.GetDamage();
                 this.AddToEquipment(this.mainHand);
                 this.mainHand = null;
             }
             else if (i == ItemKind.OFF_HAND)
             {
-                this.damage -= this.offHand.GetDamage();
+                OffHand offHandItem = (OffHand)this.offHand;
+                this.damage -= offHandItem.GetDamage();
                 this.armour -= this.offHand.GetArmour();
-                this.healthPoints -= this.offHand.GetHealthPoints();
                 this.AddToEquipment(this.offHand);
                 this.offHand = null;
             }
@@ -179,7 +182,6 @@ namespace TextBasedRPG.Classes.Unit
                         break;
                 }
                 this.armour -= item.GetArmour();
-                this.healthPoints -= item.GetHealthPoints();
                 this.AddToEquipment(item);
             }
         }
@@ -299,21 +301,18 @@ namespace TextBasedRPG.Classes.Unit
                 Console.Write(i + "." + item.GetName());
                 if (item.GetItemKind() == ItemKind.LOOT_OBJECT)
                 {
-                    LootObject lootItem;
-                    lootItem = (LootObject)item;
+                    LootObject lootItem = (LootObject)item;
                     Console.Write(" (" + lootItem.GetQuantity() + ")\n");
                 }
                 else if (item.GetItemKind() == ItemKind.WEAPON)
                 {
-                    EquipableItem eqItem;
-                    eqItem = (EquipableItem)item;
+                    Weapon eqItem = (Weapon)item;
                     Console.Write(" d" + eqItem.GetDamage() + "\n");
                 }
                 else if (armours.Contains(item.GetItemKind()))
                 {
-                    EquipableItem eqItem;
-                    eqItem = (EquipableItem)item;
-                    Console.Write(" a" + eqItem.GetArmour() + " hp" + eqItem.GetHealthPoints() + "\n");
+                    EquipableItem eqItem = (EquipableItem)item;
+                    Console.Write(" a" + eqItem.GetArmour() + "\n");
                 }
                 else Console.Write("\n");
             }

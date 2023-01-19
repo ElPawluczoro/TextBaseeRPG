@@ -37,17 +37,17 @@ namespace TextBasedRPG.Classes.Locations
                 if (item.GetItemKind() == ItemKind.LOOT_OBJECT)
                 {
                     LootObject lo = (LootObject)item;
-                    Console.WriteLine(" (" + lo.GetQuantity() + ")");
+                    Console.Write(" (" + lo.GetQuantity() + ")");
                 }
                 else if (item.GetItemKind() == ItemKind.WEAPON)
                 {
                     Weapon w = (Weapon)item;
-                    Console.WriteLine(" d" + w.GetDamage());
+                    Console.Write(" d" + w.GetDamage());
                 }
                 else if (armours.Contains(item.GetItemKind()))
                 {
                     Armour armour = (Armour)item;
-                    Console.WriteLine(" a" + armour.GetArmour() + " hp" + armour.GetHealthPoints());
+                    Console.Write(" a" + armour.GetArmour() + "\n stamina" + armour.GetStamina());
                 }
 
                 Console.WriteLine("(" + item.GetValue() + " Coins" + ")");
