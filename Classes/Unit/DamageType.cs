@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextBasedRPG.Classes.Unit.Heroes
+namespace TextBasedRPG.Classes.Unit
 {
-    internal enum HeroClasses
+    internal enum DamageType
     {
-        WARRIOR, ARCHER, MONK, WITCH, WIZARD
+        PHYSICAL, FIRE, COLD, CHAOS
     }
 }

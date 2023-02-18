@@ -28,7 +28,7 @@ namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands
             base(stamina, strenght, agility, intelligence,
                 fireResistance, coldResistance, chaosResistance, armour, n, v, rq)
         {
-            this.itemKind = ItemKind.WEAPON;
+            this.itemKind = ItemKind.OFF_HAND;
             this.offHandKind = offHandKind;
             this.damage = damage;
         }
@@ -37,7 +37,7 @@ namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands
         {
             base.DisplayInformation();
             if (this.damage != 0) Console.WriteLine("Damage: " + this.damage);
-            if (this.armour != 0) Console.WriteLine("Armour: " + this.armour);
+            if (this._armour != 0) Console.WriteLine("Armour: " + this._armour);
             WriteMethods.WriteSeparator();
         }
 

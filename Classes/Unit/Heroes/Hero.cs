@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using TextBasedRPG.Classes.GeneralClasses;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
 using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems;
 using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands;
+using TextBasedRPG.Classes.Items.NonCurrencyItems.UsableItems;
 using TextBasedRPG.Classes.Locations;
-using TextBasedRPG.Classes.World;
+using TextBasedRPG.Classes.Unit.Skills;
 
 namespace TextBasedRPG.Classes.Unit
 {
@@ -19,6 +16,8 @@ namespace TextBasedRPG.Classes.Unit
     {
         protected List<NonCurrencyItem> equipment = new List<NonCurrencyItem>();
         protected List<Currency> pocket = new List<Currency>();
+
+        protected List<Skill> skills = new List<Skill>();
 
         protected string className;
 
@@ -45,21 +44,65 @@ namespace TextBasedRPG.Classes.Unit
             this.level = Level.LEVEL1;
             this.SetMaxExpieriencePoints();
             this.expieriencePoints = 0;
-        }
 
+            CalculateDamage();
+            CalculateHealthPoints();
+            CalculateMana();
+
+        }
+        public void UpdateStats(bool add, EquipableItem item)
+        {
+            if (add)
+            {
+                stamina += item.stamina;
+                strenght += item.strenght;
+                agility += item.agility;
+                intelligence += item.intelligence;
+                armour += item.armour;
+                fireResistance += item.fireResistance;
+                coldResistance += item.coldResistance;
+                chaosResistance += item.chaosResistance;
+                
+            }
+            if (!add)
+            {
+                stamina -= item.stamina;
+                strenght -= item.strenght;
+                agility -= item.agility;
+                intelligence -= item.intelligence;
+                armour -= item.armour;
+                fireResistance -= item.fireResistance;
+                coldResistance -= item.coldResistance;
+                chaosResistance -= item.chaosResistance;
+
+            }
+            CalculateDamage();
+            CalculateHealthPoints();
+            CalculateMana();
+
+        }
         public abstract void CalculateDamage();
         public abstract void CalculateHealthPoints();
+        public abstract void CalculateMana();
 
         public override void DisplayInformation()
         {
-            base.DisplayInformation();
-            Console.Write("Class: " + this.className + "\n" +
+            Console.WriteLine("Class: " + this.className + "\n" +
                             "Level: " + this.ReturnLevelString() + "\n" +
                             "XP: " + this.GetExpieriencePoints() + "\n" +
                             "Max XP: " + this.maxExpieriencePoints + "\n");
+            base.DisplayInformation();
             WriteMethods.WriteSeparator();
         }
 
+        public List<Skill> GetSkills()
+        {
+            return skills;
+        }
+        public void SetSkills(List<Skill>  s)
+        {
+            skills = s;
+        }
         public int GetExpieriencePoints()
         {
             return this.expieriencePoints;
@@ -111,7 +154,6 @@ namespace TextBasedRPG.Classes.Unit
                 OffHand offHandItem = (OffHand)item;
                 this.offHand = item;
                 this.damage += offHandItem.GetDamage();
-                this.armour += item.GetArmour();
                 this.RemoveFromEquipment(i);
             }else if (armours.Contains(item.GetItemKind()))
             {
@@ -133,9 +175,9 @@ namespace TextBasedRPG.Classes.Unit
                         this.boots = item;
                         break;
                 }
-                this.armour += item.GetArmour();
                 this.RemoveFromEquipment(i);
             }
+            UpdateStats(true, item);
             Console.WriteLine("You equiped " + item.GetName());
         }
 
@@ -143,8 +185,10 @@ namespace TextBasedRPG.Classes.Unit
         {
             ItemKind[] armours = ItemsLists.armours;
 
+            EquipableItem item = null;
             if (i == ItemKind.WEAPON)
             {
+                item = (EquipableItem)this.mainHand;
                 Weapon weapon = (Weapon)this.mainHand;
                 this.damage -= weapon.GetDamage();
                 this.AddToEquipment(this.mainHand);
@@ -152,41 +196,46 @@ namespace TextBasedRPG.Classes.Unit
             }
             else if (i == ItemKind.OFF_HAND)
             {
+                item = (EquipableItem)this.offHand;
                 OffHand offHandItem = (OffHand)this.offHand;
                 this.damage -= offHandItem.GetDamage();
-                this.armour -= this.offHand.GetArmour();
                 this.AddToEquipment(this.offHand);
                 this.offHand = null;
             }
             else if (armours.Contains(i))
             {
-                EquipableItem item = null;
+                NonCurrencyItem itemToEq = null;
                 switch (i)
                 {
                     case ItemKind.HEAD_ARMOUR:
-                        item = this.head;
+                        itemToEq = head;
+                        item = head;
                         this.head = null;
                         break;
                     case ItemKind.BODY_ARMOUR:
-                        item = this.body;
+                        itemToEq = body;
+                        item = body;
                         this.body = null;
                         break;
                     case ItemKind.GLOVES:
-                        item = this.gloves;
+                        itemToEq = gloves;
+                        item = gloves;
                         this.gloves = null;
                         break;
                     case ItemKind.LEGS_ARMOUR:
-                        item = this.legs;
+                        itemToEq = legs;
+                        item = legs;    
                         this.legs = null;
                         break;
                     case ItemKind.BOOTS:
-                        item = this.boots;
+                        itemToEq = boots;
+                        item = boots;   
                         this.boots = null;
                         break;
                 }
-                this.armour -= item.GetArmour();
-                this.AddToEquipment(item);
+                this.AddToEquipment(itemToEq);
             }
+            UpdateStats(false, item);
         }
 
         public string ReturnLevelString()
@@ -279,7 +328,9 @@ namespace TextBasedRPG.Classes.Unit
                         exists = true;
                         lo = (LootObject)it;
                         lootObject = (LootObject)item;
+                        break;
                     }
+                    i++;
                 }
                 if (exists) this.equipment[i] = new LootObject(lo.GetName(), lo.GetValue(), lo.GetQuantity() + lootObject.GetQuantity());
                 else this.equipment.Add(item);
@@ -385,6 +436,13 @@ namespace TextBasedRPG.Classes.Unit
                 else Console.WriteLine("Not Enough Currency");
 
             }
+        }
+
+        public void UseItem(int i)
+        {
+            UsableItem usableItem = (UsableItem)equipment[i - 1];
+            usableItem.UseEffect(this);
+            RemoveFromEquipment(i);
         }
 
 

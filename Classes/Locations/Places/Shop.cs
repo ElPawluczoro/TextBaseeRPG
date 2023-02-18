@@ -8,6 +8,7 @@ using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
 using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems;
 using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.Armours;
+using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands;
 using TextBasedRPG.Classes.Unit;
 
 namespace TextBasedRPG.Classes.Locations
@@ -39,6 +40,11 @@ namespace TextBasedRPG.Classes.Locations
                     LootObject lo = (LootObject)item;
                     Console.Write(" (" + lo.GetQuantity() + ")");
                 }
+                else if (item.GetItemKind() == ItemKind.OFF_HAND)
+                {
+                    OffHand of = (OffHand)item;
+                    Console.Write(" d" + of.GetDamage());
+                }
                 else if (item.GetItemKind() == ItemKind.WEAPON)
                 {
                     Weapon w = (Weapon)item;
@@ -47,7 +53,7 @@ namespace TextBasedRPG.Classes.Locations
                 else if (armours.Contains(item.GetItemKind()))
                 {
                     Armour armour = (Armour)item;
-                    Console.Write(" a" + armour.GetArmour() + "\n stamina" + armour.GetStamina());
+                    Console.Write(" a" + armour.GetArmour() + "\n stamina" + armour.stamina);
                 }
 
                 Console.WriteLine("(" + item.GetValue() + " Coins" + ")");

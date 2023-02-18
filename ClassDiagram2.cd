@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TextBasedRPG.Classes.Fighting.Fight">
+    <Position X="6" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAEAA=</HashCode>
+      <FileName>Classes\Fighting\Fight.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.GameControll.GameControll">
+    <Position X="4.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAACAAAAIAAAgAAAAAAAAAAAoAQgAAAAAAA=</HashCode>
+      <FileName>Classes\GameControll\GameControll.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.GeneralClasses.ItemsLists">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\GeneralClasses\ItemsLists.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.GeneralClasses.WriteMethods">
+    <Position X="6" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\GeneralClasses\WriteMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.Items.GenerateItem">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAQAACAAAAAAAQAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Classes\Items\GenerateItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.Armours.ArmourMethods">
+    <Position X="0.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Classes\Items\NonCurrencyItems\EquipableItems\Armours\ArmourMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.Player.PlayerControll">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAgIAAEAAAAAAAQAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Classes\Player\PlayerControll.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.Unit.HeroMethods">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Unit\Heroes\HeroMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.Unit.Monsters.MonsterGenerator">
+    <Position X="6" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAgAAQAAAAAAAA=</HashCode>
+      <FileName>Classes\Unit\Monsters\MonsterGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBasedRPG.Classes.World.WorldGenerator">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Classes\World\WorldGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TextBasedRPG.Classes.Items.Currency.CurrencyType">
+    <Position X="2.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Items\Currency\CurrencyType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TextBasedRPG.Classes.Items.ItemKind">
+    <Position X="2.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIBAAAAAAAAAEAACAAAABAAQAAAAAAAAgAIAAACAA=</HashCode>
+      <FileName>Classes\Items\ItemKind.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.Armours.ArmourKind">
+    <Position X="0.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Classes\Items\NonCurrencyItems\EquipableItems\Armours\ArmourKind.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands.OffHandKind">
+    <Position X="0.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAABAAA=</HashCode>
+      <FileName>Classes\Items\NonCurrencyItems\EquipableItems\OffHands\OffHandKind.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.WeaponKind">
+    <Position X="0.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAACAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Items\NonCurrencyItems\EquipableItems\Weapons\WeaponKind.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TextBasedRPG.Classes.Locations.Places.PlaceKind">
+    <Position X="6" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Locations\Places\PlaceKind.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TextBasedRPG.Classes.Unit.Heroes.HeroClasses">
+    <Position X="2.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAKAA=</HashCode>
+      <FileName>Classes\Unit\Heroes\HeroClasses.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TextBasedRPG.Classes.Unit.Level">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Unit\Heroes\Level.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextBasedRPG.Classes.Unit.Skills;
 
 namespace TextBasedRPG.Classes.Unit
 {
@@ -21,5 +22,30 @@ namespace TextBasedRPG.Classes.Unit
                 default: return 7;
             }
         }
+
+        public static string StatToString(Stats stat)
+        {
+            switch (stat)
+            {
+                case Stats.STAMINA: return "stamina";
+                case Stats.STRENGHT: return "strength";
+                case Stats.AGILITY: return "agility";
+                case Stats.INTELIGENCE: return "intelligence";
+                default: return "wrong value";
+            }
+        }
+
+        public static string DamageTypeToString(DamageType damageType)
+        {
+            switch (damageType)
+            {
+                case DamageType.PHYSICAL: return "Physical";
+                case DamageType.FIRE: return "Fire";
+                case DamageType.COLD: return "Cold";
+                case DamageType.CHAOS: return "Chaos";
+                default: return "Wrong Value";
+            }
+        }
+
     }
 }

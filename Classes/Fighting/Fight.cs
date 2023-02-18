@@ -9,6 +9,7 @@ using TextBasedRPG.Classes.Items.Currency;
 using TextBasedRPG.Classes.Player;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Monsters;
+using TextBasedRPG.Classes.Unit.Skills;
 
 namespace TextBasedRPG.Classes.Fighting
 {
@@ -16,12 +17,57 @@ namespace TextBasedRPG.Classes.Fighting
     {
         static Random random = new Random();
 
-        public static void PreformFight(Hero h, Monster m)
+        /*public static void PreformFight(Hero h, Monster m)
         {
+            h.DisplayInformation();
+            m.DisplayInformation();
             while (h.IsAlive() && m.IsAlive())
             {
-                h.DealDamage(m);
-                m.DealDamage(h);
+                if (h.GetSkills().Count > 0)
+                {
+                    h.GetSkills()[0].Use(h, m);
+                }else h.DealDamage(m, DamageType.PHYSICAL);
+                m.DealDamage(h, DamageType.PHYSICAL);
+
+                h.DisplayInformation();
+                m.DisplayInformation();
+            }
+            if (!m.IsAlive()) Fight.GiveLoot(h, m);
+            if (!h.IsAlive())
+            {
+                PlayerControll.DeleteHero(h.GetName().ToLowerInvariant());
+                Console.WriteLine("Your hero died...");
+            }
+        }*/
+
+        public static void PreformFight(Hero h, Monster m)
+        {
+            h.DisplayMinimalInformation();
+            m.DisplayMinimalInformation();
+            while (h.IsAlive() && m.IsAlive())
+            {
+                Console.WriteLine("Choose action:");
+                foreach(Skill skill in h.GetSkills())
+                {
+                    Console.WriteLine(skill.name);
+                }
+                Console.WriteLine("Atack");
+                string action = Console.ReadLine();
+                if (action.ToLowerInvariant().Equals("atack"))
+                {
+                    h.DealDamage(m, DamageType.PHYSICAL);
+                }
+                else if (HeroSkills(action, h))
+                {
+                    HeroUseSkill(action, h, m);
+                }
+                else { Console.WriteLine("You can not do that!"); WriteMethods.WriteSeparator(); continue; }
+
+
+                m.DealDamage(h, DamageType.PHYSICAL);
+
+                h.DisplayMinimalInformation();
+                m.DisplayMinimalInformation();
             }
             if (!m.IsAlive()) Fight.GiveLoot(h, m);
             if (!h.IsAlive())
@@ -31,7 +77,30 @@ namespace TextBasedRPG.Classes.Fighting
             }
         }
 
-        public static  void GiveLoot(Hero h, Monster m)
+        public static bool HeroSkills(string skillName, Hero h)
+        {
+            foreach(Skill skill in h.GetSkills())
+            {
+                if (skill.name.ToLowerInvariant().Equals(skillName.ToLowerInvariant()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        } 
+
+        public static void HeroUseSkill(string skillName, Hero h, Monster m)
+        {
+            foreach (Skill skill in h.GetSkills())
+            {
+                if (skill.name.ToLowerInvariant().Equals(skillName.ToLowerInvariant()))
+                {
+                    skill.Use(h, m);
+                }
+            }
+        }
+
+        public static void GiveLoot(Hero h, Monster m)
         {
             Item lootItem;
             int randomItem;

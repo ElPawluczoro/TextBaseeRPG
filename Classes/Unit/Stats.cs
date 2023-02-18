@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextBasedRPG.Classes.Unit.Heroes
+namespace TextBasedRPG.Classes.Unit.Skills
 {
-    internal enum HeroClasses
+    internal enum Stats
     {
-        WARRIOR, ARCHER, MONK, WITCH, WIZARD
+        STAMINA, STRENGHT, AGILITY, INTELIGENCE
     }
 }

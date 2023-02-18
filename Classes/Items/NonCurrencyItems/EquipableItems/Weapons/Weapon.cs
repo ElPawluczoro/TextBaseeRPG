@@ -10,9 +10,9 @@ namespace TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems
 {
     internal class Weapon : EquipableItem
     {
-        protected float damage;
+        private float damage;
 
-        protected WeaponKind weaponKind;
+        private WeaponKind weaponKind;
         public Weapon(int stamina, int strenght, int agility, int intelligence, 
             int fireResistance, int coldResistance, int chaosResistance, int armour,
             string n, int v, Level rq, float damage, WeaponKind weaponKind) 

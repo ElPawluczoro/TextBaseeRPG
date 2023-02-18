@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextBasedRPG.Classes.Items;
+using TextBasedRPG.Classes.Items.NonCurrencyItems.UsableItems;
 using TextBasedRPG.Classes.Locations;
 using TextBasedRPG.Classes.Locations.Places;
 using TextBasedRPG.Classes.Unit.Monsters;
@@ -27,18 +28,26 @@ namespace TextBasedRPG.Classes.World
             blackSmithItems.Add(GenerateItem.GenerateOffHand(Unit.Level.LEVEL1));
 
             blackSmithItems.Add(GenerateItem.GenerateMeleWeapon(Unit.Level.LEVEL2));
-            blackSmithItems.Add(GenerateItem.GenerateMeleWeapon(Unit.Level.LEVEL2));
-            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL1, ItemKind.BODY_ARMOUR));
-            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL1, ItemKind.HEAD_ARMOUR));
+            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL2, ItemKind.BODY_ARMOUR));
+            blackSmithItems.Add(GenerateItem.GenerateArmour(Unit.Level.LEVEL2, ItemKind.HEAD_ARMOUR));
             blackSmithItems.Add(GenerateItem.GenerateOffHand(Unit.Level.LEVEL2));
             blackSmithItems.Add(GenerateItem.GenerateOffHand(Unit.Level.LEVEL2));
+
+            List<NonCurrencyItem> potionsShopItems = new List<NonCurrencyItem>();
+            potionsShopItems.Add(new UsableItem("Small healing potion", Effects.RESTORE_HP, 10, 15));
+            potionsShopItems.Add(new UsableItem("Small healing potion", Effects.RESTORE_HP, 10, 15));
+            potionsShopItems.Add(new UsableItem("Small healing potion", Effects.RESTORE_HP, 10, 15));
+            potionsShopItems.Add(new UsableItem("Small healing potion", Effects.RESTORE_HP, 10, 15));
+            potionsShopItems.Add(new UsableItem("Small healing potion", Effects.RESTORE_HP, 10, 15));
+            potionsShopItems.Add(new UsableItem("Medium healing potion", Effects.RESTORE_HP, 25, 50));
+            potionsShopItems.Add(new UsableItem("Medium healing potion", Effects.RESTORE_HP, 25, 50));
+            potionsShopItems.Add(new UsableItem("Medium healing potion", Effects.RESTORE_HP, 25, 50));
+            potionsShopItems.Add(new UsableItem("Medium healing potion", Effects.RESTORE_HP, 25, 50));
+
 
             //List<Place> mainTownMarketPlaces = new List<Place>();
             mainTownMarketPlaces.Add(new Shop("Blacksmith", blackSmithItems));
-
-            //List<Location> mainTownMarketLocations = new List<Location>();
-
-            //Location mainTownMarket = new Location("MainTownMarket", mainTownMarketPlaces, mainTownMarketLocations);
+            mainTownMarketPlaces.Add(new Shop("Alchemist", potionsShopItems));
 
             //Main Town East Gate
             List<Place> mainTownEastGatePlaces = new List<Place>();
@@ -67,11 +76,6 @@ namespace TextBasedRPG.Classes.World
 
             mainTownEastGateLocations.Add(forest); //Main Town East Gate
             mainTownEastGate.locationsNear = mainTownEastGateLocations; //Main Town East Gate
-
-
-
-
-
 
         }
     }

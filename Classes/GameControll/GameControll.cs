@@ -206,7 +206,9 @@ namespace TextBasedRPG.Classes.GameControll
                                         "show... \n" +
                                         "goto + location name (e.q goto MainTownMarket\n" +
                                         "findenemies/fe + place name (e.q findenemies GoblinVillage)\n" +
-                                        "equip/e + item index in equipment" +
+                                        "equip/e + item index in equipment\n" +
+                                        "unequip/ue + item kind (e.q ue boody)\n" +
+                                        "use/u + item index in equipment\n" + 
                                         "\"Try typing \"help show\" to get more information\"");
                         WriteMethods.WriteSeparator();
                     }
@@ -261,6 +263,9 @@ namespace TextBasedRPG.Classes.GameControll
                             case "Goblin":
                                 Fight.PreformFight(h, MonsterGenerator.Goblin());
                                 break;
+                            case "Orc":
+                                Fight.PreformFight(h, MonsterGenerator.Orc());
+                                break;
                             default: Console.WriteLine("Something went wrong"); break;
                         }
                     }
@@ -298,7 +303,52 @@ namespace TextBasedRPG.Classes.GameControll
                     }
                     WriteMethods.WriteSeparator();
                     break;
-
+                case "unequip":
+                case "ue":
+                    switch (lastParametr)
+                    {
+                        case "head":
+                            h.UnequipItem(ItemKind.HEAD_ARMOUR);
+                            break;
+                        case "body":
+                        case "bodyarmour":
+                            h.UnequipItem(ItemKind.BODY_ARMOUR);
+                            break;
+                        case "gloves":
+                            h.UnequipItem(ItemKind.GLOVES);
+                            break;
+                        case "legs":
+                        case "legsarmour":
+                            h.UnequipItem(ItemKind.LEGS_ARMOUR);
+                            break;
+                        case "boots":
+                            h.UnequipItem(ItemKind.BOOTS);
+                            break;
+                        case "weapon":
+                            h.UnequipItem(ItemKind.WEAPON);
+                            break;
+                        case "offhand":
+                            h.UnequipItem(ItemKind.OFF_HAND);
+                            break;
+                    }
+                    break;
+                case "use":
+                case "u":
+                    try
+                    {
+                        int itemIndex = int.Parse(lastParametr);
+                        h.UseItem(itemIndex);
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Console.WriteLine("You must provide a number as second argument");
+                    }
+                    catch (System.InvalidCastException e)
+                    {
+                        Console.WriteLine("You can not use that!");
+                    }
+                    WriteMethods.WriteSeparator();
+                    break;
                 default:
                     ComandNotFoundMessage();
                     break;

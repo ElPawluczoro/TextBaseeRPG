@@ -18,8 +18,15 @@ namespace TextBasedRPG.Classes.Unit.Monsters
 
         protected Random random = new Random();
 
-        public Monster(string name, int stamina, int strenght, int agility, int intelligence, 
-                    int armour, int fireResistance, int coldResistance, int chaosResistance, int exp, List<Item> dropList) 
+        public Monster()
+        {
+
+        }
+
+        public Monster(string name, int stamina, int strenght, int agility, int intelligence,   //basic stats
+                    int armour, int fireResistance, int coldResistance, int chaosResistance,    //resistances
+                    int exp, List<Item> dropList,                                               //rewards
+                    bool fromSt, float stMod, bool fromAg, float agMod, bool fromInt, float intMod)  //damage modifires
                     : 
                     base(name, stamina, strenght, agility, intelligence,
                     armour, fireResistance, coldResistance, chaosResistance)
@@ -27,6 +34,23 @@ namespace TextBasedRPG.Classes.Unit.Monsters
             this.name = name;
             this.dropList = dropList;
             this.expierienceGiven = exp;
+
+            this.maxHealthPoints = stamina * 2;
+            this.healthPoints = maxHealthPoints;
+            if (fromSt)
+            {
+                damage += this.strenght * stMod;
+            }
+            if (fromAg)
+            {
+                damage += this.agility * agMod;
+            }
+            if (fromInt)
+            {
+                damage += this.intelligence * intMod;
+            }
+
+
         }
 
         public override void DisplayInformation()

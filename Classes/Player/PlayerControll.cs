@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
+using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.Armours;
+using TextBasedRPG.Classes.Items.NonCurrencyItems.UsableItems;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Heroes;
 using TextBasedRPG.Classes.Unit.Heroes.Classes;
@@ -40,23 +42,27 @@ namespace TextBasedRPG.Classes.Player
             string heroClass = Console.ReadLine().ToLowerInvariant();
             Console.WriteLine("Choose name for your hero");
             string name = Console.ReadLine();
-                if (heroes.Count < maxHeroes && IsNameAvaiable(name))
+            if (heroes.Count < maxHeroes && IsNameAvaiable(name))
+            {
+                switch (heroClass.ToLowerInvariant())
                 {
-                    switch (heroClass.ToLowerInvariant())
-                    {
                     case "warrior": heroes.Add(new Warrior(name)); break;
                     case "archer": heroes.Add(new Archer(name)); break;
                     case "monk": heroes.Add(new Monk(name)); break;
                     case "witch": heroes.Add(new Witch(name)); break;
                     case "wizard": heroes.Add(new Wizard(name)); break;
                     default: succesfullyCreated = false; break;
-                    }
-                    heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
                 }
-                else if(heroes.Count < maxHeroes && !IsNameAvaiable(name)){
-                    Console.WriteLine("You can not have two heroes with the same name!");
-                }
-                else Console.WriteLine("You can not have more heroes");
+                heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
+            }
+            else if (heroes.Count < maxHeroes && !IsNameAvaiable(name))
+            {
+                Console.WriteLine("You can not have two heroes with the same name!");
+            }
+            else
+            {
+                Console.WriteLine("You can not have more heroes");
+            }
 
             if (!succesfullyCreated)
             {
@@ -69,21 +75,20 @@ namespace TextBasedRPG.Classes.Player
             WorldGenerator.GenerateWorld(); //maybe will change TODO
 
             Console.WriteLine("Create new hero: \nChoose class:\n(Warrior)");
-            string heroClass = "warrior";
+            string heroClass = "wizard";
             Console.WriteLine("Choose name for your hero");
             string name = n;
             switch (heroClass)
             {
-                case "warrior":
-                case "WARRIOR":
-                case "Warrior":
+                case "wizard":
                     if (heroes.Count < maxHeroes && IsNameAvaiable(n))
                     {
-                        heroes.Add(new Warrior(name));
+                        heroes.Add(new Wizard(name));
                         Console.WriteLine("Hero succesfully created");
                         heroes[0].AddToPocket(new Coins(50));
                         heroes[0].AddToEquipment(new LootObject("Totem", 5, 1));
                         heroes[0].AddToEquipment(GenerateItem.GenerateMeleWeapon(Level.LEVEL1));
+                        heroes[0].AddToEquipment(new Armour(1, 1, 1, 1, 1, 1, 1, 1, "The power of basics", 33, Level.LEVEL1, ArmourKind.LIGHT_ARMOUR, ItemKind.BODY_ARMOUR));
                     }
                     else if(heroes.Count < maxHeroes && !IsNameAvaiable(n))
                     {
