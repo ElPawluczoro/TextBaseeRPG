@@ -25,6 +25,13 @@ namespace TextBasedRPG.Classes.Locations
             this._locationsNear = locations;
         }
 
+        public Location(string name)
+        {
+            this.name = name;
+            this._places = new List<Place>();
+            this._locationsNear = new List<Location>();
+        }
+
         public void DisplayInformation()
         {
             Console.WriteLine("Name: " + this._name + "\nPlaces:");

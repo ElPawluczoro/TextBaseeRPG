@@ -11,7 +11,7 @@ namespace TextBasedRPG.Classes.Unit.Monsters
 {
     internal class Monster : Unit
     {
-        protected int expierienceGiven;
+        protected int expierienceGiven; public int ExpierienceGiven { get => expierienceGiven; set => expierienceGiven = value; }
 
         protected List<string> dropListDisplay = new List<string>();
         protected List<Item> dropList = new List<Item>();
@@ -51,6 +51,11 @@ namespace TextBasedRPG.Classes.Unit.Monsters
             }
 
 
+        }
+
+        public void SetDropList(List<Item> dropList)
+        {
+            this.dropList = dropList;
         }
 
         public override void DisplayInformation()

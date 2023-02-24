@@ -10,6 +10,7 @@ using TextBasedRPG.Classes.Player;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Monsters;
 using TextBasedRPG.Classes.Unit.Skills;
+using TextBasedRPG.Classes.Unit.Skills.Passives;
 
 namespace TextBasedRPG.Classes.Fighting
 {
@@ -40,10 +41,32 @@ namespace TextBasedRPG.Classes.Fighting
             }
         }*/
 
+        public static void TriggerPassive(Unit.Unit user, Unit.Unit target, PassivesReleases releases)
+        {
+            foreach (Passive p in user.GetPassives())
+            {
+                if (p.PassivesRelease == releases)
+                {
+                    if (p.DamageTargetType == Target.SELF) p.DamageTarget = user;
+                    else p.DamageTarget = target;
+
+                    if (p.HealingTargetType == Target.SELF) p.HealingTarget = user;
+                    else p.HealingTarget = target;
+
+                    if (p.StatIncTargetType == Target.SELF) p.StatIncTarget = user;
+                    else p.StatIncTarget = target;
+
+                    p.Update();
+                }
+            }
+        }
+
         public static void PreformFight(Hero h, Monster m)
         {
             h.DisplayMinimalInformation();
             m.DisplayMinimalInformation();
+            TriggerPassive(m, h, PassivesReleases.COMBAT_START);
+            TriggerPassive(h, m, PassivesReleases.COMBAT_START);
             while (h.IsAlive() && m.IsAlive())
             {
                 Console.WriteLine("Choose action:");
@@ -56,6 +79,8 @@ namespace TextBasedRPG.Classes.Fighting
                 if (action.ToLowerInvariant().Equals("atack"))
                 {
                     h.DealDamage(m, DamageType.PHYSICAL);
+                    TriggerPassive(h, m, PassivesReleases.ON_HIT);
+                    TriggerPassive(m, h, PassivesReleases.GET_HIT);
                 }
                 else if (HeroSkills(action, h))
                 {
@@ -65,11 +90,17 @@ namespace TextBasedRPG.Classes.Fighting
 
 
                 m.DealDamage(h, DamageType.PHYSICAL);
+                TriggerPassive(m, h, PassivesReleases.ON_HIT);
+                TriggerPassive(h, m, PassivesReleases.GET_HIT);
 
                 h.DisplayMinimalInformation();
                 m.DisplayMinimalInformation();
             }
-            if (!m.IsAlive()) Fight.GiveLoot(h, m);
+            if (!m.IsAlive()) 
+            {
+                TriggerPassive(h, m, PassivesReleases.COMBAT_END);
+                Fight.GiveLoot(h, m);
+            }
             if (!h.IsAlive())
             {
                 PlayerControll.DeleteHero(h.GetName().ToLowerInvariant());
@@ -93,9 +124,13 @@ namespace TextBasedRPG.Classes.Fighting
         {
             foreach (Skill skill in h.GetSkills())
             {
-                if (skill.name.ToLowerInvariant().Equals(skillName.ToLowerInvariant()))
+                if (skill.name.ToLowerInvariant().Equals(skillName.ToLowerInvariant()) && skill.SkillType == SkillType.DEALING_DAMAGE_SKILL)
                 {
                     skill.Use(h, m);
+                }
+                else
+                {
+                    skill.Use(h, h);
                 }
             }
         }

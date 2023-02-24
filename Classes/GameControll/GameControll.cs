@@ -13,6 +13,7 @@ using TextBasedRPG.Classes.Unit.Monsters;
 using TextBasedRPG.Classes.Fighting;
 using System.Security.Cryptography.X509Certificates;
 using TextBasedRPG.Classes.Items;
+using TextBasedRPG.Classes.Unit.Skills;
 
 namespace TextBasedRPG.Classes.GameControll
 {
@@ -349,6 +350,23 @@ namespace TextBasedRPG.Classes.GameControll
                     }
                     WriteMethods.WriteSeparator();
                     break;
+                case "cast":
+                    bool used = false;
+                    foreach(Skill skill in h.GetSkills())
+                    {
+                        if (skill.name.ToLowerInvariant() == lastParametr)
+                        {
+                            skill.Use(h, h);
+                            used = true;
+                            break;
+                        }
+                    }
+                    if (!used)
+                    {
+                        Console.WriteLine("Can not find skill!");
+                    }
+                    break;
+
                 default:
                     ComandNotFoundMessage();
                     break;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TextBasedRPG.Classes.Fighting;
 using TextBasedRPG.Classes.GameControll;
+using TextBasedRPG.Classes.GeneralClasses;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Items.Currency;
 using TextBasedRPG.Classes.Locations;

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands;
 using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems;
+using TextBasedRPG.Classes.Unit.Skills;
+using TextBasedRPG.Classes.Unit.Skills.Passives;
+using TextBasedRPG.Classes.Unit.Monsters;
 
 namespace TextBasedRPG.Classes.Unit.Heroes.Classes
 {
@@ -13,7 +16,17 @@ namespace TextBasedRPG.Classes.Unit.Heroes.Classes
         public Monk(string n) : base(n, 10, 5, 4, 2, 2, 2, 2, 2)
         {
             this.className = "Monk";
-            
+            skills.Add(new HealingSkillOneStatScalling("Peace", Stats.STAMINA, 1, 5));
+
+            PassiveBuilder passiveBuilder = new PassiveBuilder();
+            Passive holyPunch = passiveBuilder.Name("Holy punch")
+                                              .PassivesRelease(PassivesReleases.ON_HIT)
+                                              .AddDamageEffect(1, null, DamageType.FIRE, Target.ENEMY)
+                                              .Build();
+            passives.Add(holyPunch);
+
+
+
         }
 
 

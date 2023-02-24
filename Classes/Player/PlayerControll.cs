@@ -12,7 +12,7 @@ using TextBasedRPG.Classes.Items.NonCurrencyItems.UsableItems;
 using TextBasedRPG.Classes.Unit;
 using TextBasedRPG.Classes.Unit.Heroes;
 using TextBasedRPG.Classes.Unit.Heroes.Classes;
-using TextBasedRPG.Classes.World;
+using TextBasedRPG.Classes.World_;
 
 namespace TextBasedRPG.Classes.Player
 {
@@ -36,7 +36,8 @@ namespace TextBasedRPG.Classes.Player
         {
             bool succesfullyCreated = true;
 
-            WorldGenerator.GenerateWorld(); //maybe will change TODO
+            //WorldGenerator.GenerateWorld(); //maybe will change TODO
+            World world = WorldGenerator.GenerateTestWorld();
 
             Console.WriteLine("Create new hero: \nChoose class:\n(Warrior)\n(Archer)\n(Monk)\n(Witch)\n(Wizard)");
             string heroClass = Console.ReadLine().ToLowerInvariant();
@@ -53,7 +54,7 @@ namespace TextBasedRPG.Classes.Player
                     case "wizard": heroes.Add(new Wizard(name)); break;
                     default: succesfullyCreated = false; break;
                 }
-                heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
+                heroes[heroes.Count - 1].SetLocation(world.worldLocations.First());
             }
             else if (heroes.Count < maxHeroes && !IsNameAvaiable(name))
             {
@@ -72,7 +73,8 @@ namespace TextBasedRPG.Classes.Player
         public static void CreateNewHero(string n)//for tests
 
         {
-            WorldGenerator.GenerateWorld(); //maybe will change TODO
+            //WorldGenerator.GenerateWorld(); //maybe will change TODO
+            World world = WorldGenerator.GenerateTestWorld();
 
             Console.WriteLine("Create new hero: \nChoose class:\n(Warrior)");
             string heroClass = "wizard";
@@ -100,7 +102,7 @@ namespace TextBasedRPG.Classes.Player
                     Console.WriteLine("Could not create new hero");
                     break;
             }
-            heroes[heroes.Count - 1].SetLocation(WorldGenerator.mainTownMarket);
+            heroes[heroes.Count - 1].SetLocation(world.worldLocations.First());
         }
 
         public static List<Hero> GetHeroesList()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextBasedRPG.Classes.GeneralClasses;
+using TextBasedRPG.Classes.Unit.Skills.Passives;
 
 namespace TextBasedRPG.Classes.Unit
 {
@@ -38,6 +39,8 @@ namespace TextBasedRPG.Classes.Unit
 
         protected string name;
 
+        protected List<Passive> passives = new List<Passive>(); 
+
         public Unit()
         {
 
@@ -61,15 +64,15 @@ namespace TextBasedRPG.Classes.Unit
             Console.WriteLine("Name: " + name + "\n" +
                 "Health Points: " + healthPoints + "\\" + maxHealthPoints + "\n" +
                 "Mana: " + mana + "\\" + maxMana + "\n" +
-                "Damage: " + damage + "\n" + 
+                "Damage: " + damage + "\n" +
                 "Stamina: " + stamina + "\n" +
                 "Strength: " + strenght + "\n" +
                 "Agility: " + agility + "\n" +
-                "Intelligence: " + intelligence + "\n" +
-                "Armour: " + armour + "\n" +
-                "Fire Resistance: " + fireResistance + "\n" +
-                "Cold Resistance: " + coldResistance +"\n" +
-                "Chaos Resistance: " + chaosResistance);
+                "Intelligence: " + intelligence);
+                WriteMethods.WriteGrayLine("Armour: " + armour);
+                WriteMethods.WriteRedLine("Fire Resistance: " + fireResistance);
+                WriteMethods.WriteBlueLine("Cold Resistance: " + coldResistance);
+                WriteMethods.WriteGreenLine("Chaos Resistance: " + chaosResistance);
             if (!this.IsAlive()) Console.WriteLine("Dead \n");
         }
 
@@ -81,6 +84,15 @@ namespace TextBasedRPG.Classes.Unit
             WriteMethods.WriteSeparator();
         }
 
+        public void HealHealthPoints(float value)
+        {
+            healthPoints += value;
+            if (healthPoints > maxHealthPoints)
+            {
+                healthPoints = maxHealthPoints;
+            }
+        }
+
         public void DealDamage(Unit u, DamageType dt)
         {
             u.GetDamage(this.ReturnDamage(), dt);
@@ -89,6 +101,21 @@ namespace TextBasedRPG.Classes.Unit
         public string GetName()
         {
             return name;
+        }
+
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
+
+        public List<Passive> GetPassives()
+        {
+            return passives;
+        }
+
+        public void AddPassive(Passive passive)
+        {
+            passives.Add(passive);
         }
 
         public void GetDamage(float d, DamageType dt)
