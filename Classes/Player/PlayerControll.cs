@@ -54,7 +54,9 @@ namespace TextBasedRPG.Classes.Player
                     case "wizard": heroes.Add(new Wizard(name)); break;
                     default: succesfullyCreated = false; break;
                 }
-                heroes[heroes.Count - 1].SetLocation(world.worldLocations.First());
+                Hero hero = heroes[heroes.Count - 1];
+                hero.SetLocation(world.worldLocations.First());
+                hero.World = world;
             }
             else if (heroes.Count < maxHeroes && !IsNameAvaiable(name))
             {
@@ -102,7 +104,9 @@ namespace TextBasedRPG.Classes.Player
                     Console.WriteLine("Could not create new hero");
                     break;
             }
-            heroes[heroes.Count - 1].SetLocation(world.worldLocations.First());
+            Hero hero = heroes[heroes.Count - 1];
+            hero.SetLocation(world.worldLocations.First());
+            hero.World = world;
         }
 
         public static List<Hero> GetHeroesList()

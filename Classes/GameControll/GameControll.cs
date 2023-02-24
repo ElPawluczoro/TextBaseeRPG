@@ -14,6 +14,7 @@ using TextBasedRPG.Classes.Fighting;
 using System.Security.Cryptography.X509Certificates;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Unit.Skills;
+using TextBasedRPG.Classes.World_;
 
 namespace TextBasedRPG.Classes.GameControll
 {
@@ -175,6 +176,8 @@ namespace TextBasedRPG.Classes.GameControll
             string firstParametr = GameControll.GetFirstParametr(userInput.ToLowerInvariant());
             string lastParametr = GameControll.GetLastParametr(userInput.ToLowerInvariant());
 
+            Time time = h.World.Time;
+
             switch (firstParametr)
             {
                 case "show":
@@ -198,6 +201,10 @@ namespace TextBasedRPG.Classes.GameControll
                     {
                         h.GetLocation().DisplayInformation();
                     }
+                    else if (lastParametr == "time")
+                    {
+                        time.DisplayTime();
+                    }
                     else ComandNotFoundMessage();
                     break;
                 case "help":
@@ -210,6 +217,7 @@ namespace TextBasedRPG.Classes.GameControll
                                         "equip/e + item index in equipment\n" +
                                         "unequip/ue + item kind (e.q ue boody)\n" +
                                         "use/u + item index in equipment\n" + 
+                                        "cast + skill name\n" +
                                         "\"Try typing \"help show\" to get more information\"");
                         WriteMethods.WriteSeparator();
                     }
@@ -220,7 +228,8 @@ namespace TextBasedRPG.Classes.GameControll
                                         "show pocket\n" +
                                         "show stats\n" +
                                         "show gear\n" +
-                                        "show location");
+                                        "show location\n" +
+                                        "show time");
                         WriteMethods.WriteSeparator();
                     }
                     else ComandNotFoundMessage();
@@ -233,6 +242,7 @@ namespace TextBasedRPG.Classes.GameControll
                         {
                             Console.WriteLine("You went to " + h.GetLocation().locationsNear[i].name);
                             h.SetLocation(h.GetLocation().locationsNear[i]);
+                            time.TimePasses(min: 15);
                             WriteMethods.WriteSeparator();
                             exists = true;
                             break;
@@ -259,6 +269,7 @@ namespace TextBasedRPG.Classes.GameControll
                     if (monsterPlace != null)
                     {
                         MonstersPlace monstersPlace = (MonstersPlace)monsterPlace;
+                        bool fightPreformed = true;
                         switch (monstersPlace.monsters[random.Next(0, monstersPlace.monsters.Count - 1)])
                         {
                             case "Goblin":
@@ -267,7 +278,11 @@ namespace TextBasedRPG.Classes.GameControll
                             case "Orc":
                                 Fight.PreformFight(h, MonsterGenerator.Orc());
                                 break;
-                            default: Console.WriteLine("Something went wrong"); break;
+                            default: Console.WriteLine("Something went wrong"); fightPreformed = false; break; 
+                        }
+                        if (fightPreformed)
+                        {
+                            time.TimePasses(min: random.Next(1, 2) * 15);
                         }
                     }
                     break;
@@ -280,6 +295,7 @@ namespace TextBasedRPG.Classes.GameControll
                         {
                             place = p;
                             Console.WriteLine("You are visiting " + p.name);
+                            time.TimePasses(min: 5);
                             while (!VisitShop(p, h)) ;
                             break;
                         }else if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind != PlaceKind.SHOP)

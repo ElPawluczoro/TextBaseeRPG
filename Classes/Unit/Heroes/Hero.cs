@@ -9,6 +9,7 @@ using TextBasedRPG.Classes.Items.NonCurrencyItems.EquipableItems.OffHands;
 using TextBasedRPG.Classes.Items.NonCurrencyItems.UsableItems;
 using TextBasedRPG.Classes.Locations;
 using TextBasedRPG.Classes.Unit.Skills;
+using TextBasedRPG.Classes.World_;
 
 namespace TextBasedRPG.Classes.Unit
 {
@@ -22,6 +23,7 @@ namespace TextBasedRPG.Classes.Unit
         protected string className;
 
         protected Location location;
+        protected World world; public World World { get => world; set => world = value; }
 
         //equiped stuff
         protected EquipableItem head;
