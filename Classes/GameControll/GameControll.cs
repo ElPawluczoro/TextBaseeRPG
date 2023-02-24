@@ -341,6 +341,7 @@ namespace TextBasedRPG.Classes.GameControll
                         case "boots":
                             h.UnequipItem(ItemKind.BOOTS);
                             break;
+                        case "mainhand":
                         case "weapon":
                             h.UnequipItem(ItemKind.WEAPON);
                             break;
