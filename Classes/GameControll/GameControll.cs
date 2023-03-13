@@ -15,6 +15,7 @@ using System.Security.Cryptography.X509Certificates;
 using TextBasedRPG.Classes.Items;
 using TextBasedRPG.Classes.Unit.Skills;
 using TextBasedRPG.Classes.World_;
+using System.Net;
 
 namespace TextBasedRPG.Classes.GameControll
 {
@@ -180,7 +181,7 @@ namespace TextBasedRPG.Classes.GameControll
 
             switch (firstParametr)
             {
-                case "show":
+                /*case "show":
                     if(lastParametr == "equipment" || lastParametr == "eq")
                     {
                         h.DisplayEquipment();
@@ -206,7 +207,7 @@ namespace TextBasedRPG.Classes.GameControll
                         time.DisplayTime();
                     }
                     else ComandNotFoundMessage();
-                    break;
+                    break;*/
                 case "help":
                     if (lastParametr == "help")
                     {
@@ -296,7 +297,7 @@ namespace TextBasedRPG.Classes.GameControll
                             place = p;
                             Console.WriteLine("You are visiting " + p.name);
                             time.TimePasses(min: 5);
-                            while (!VisitShop(p, h)) ;
+                            while (!VisitShop(p, h, time)) ;
                             break;
                         }else if (p.name.ToLowerInvariant() == lastParametr.ToLowerInvariant() && p.placeKind != PlaceKind.SHOP)
                         {
@@ -304,7 +305,7 @@ namespace TextBasedRPG.Classes.GameControll
                         }
                     }
                         break;
-                case "equip": 
+                /*case "equip": 
                 case "e":
                     try {
                         int itemIndex = int.Parse(lastParametr);
@@ -382,10 +383,11 @@ namespace TextBasedRPG.Classes.GameControll
                     {
                         Console.WriteLine("Can not find skill!");
                     }
-                    break;
+                    break;*/
 
                 default:
-                    ComandNotFoundMessage();
+                    CommandsAvaiableEverywhere(firstParametr, lastParametr, h, time);
+                    //ComandNotFoundMessage();
                     break;
                     }
 
@@ -394,9 +396,10 @@ namespace TextBasedRPG.Classes.GameControll
 
         }
 
-        public static bool VisitShop(Place p, Hero h)
+        public static bool VisitShop(Place p, Hero h, Time time)
         {
             bool exit = false;
+            bool show = false;
 
             Shop shop = (Shop)p;
 
@@ -404,14 +407,15 @@ namespace TextBasedRPG.Classes.GameControll
 
             string firstParametr = GameControll.GetFirstParametr(userInput.ToLowerInvariant());
             string lastParametr = GameControll.GetLastParametr(userInput.ToLowerInvariant());
-            try
-            {
+                try
+                {
                 switch (firstParametr)
                 {
                     case "show":
                         if (lastParametr == "goods")
                         {
                             shop.DisplayGoods();
+                            show = true;
                         }
                         break;
                     case "buy":
@@ -431,15 +435,140 @@ namespace TextBasedRPG.Classes.GameControll
                         WriteMethods.WriteSeparator();
                         break;
                     default:
-                        ComandNotFoundMessage();
-                        break;
+                        {
+                        CommandsAvaiableEverywhere(firstParametr, lastParametr, h, time);
+                        //ComandNotFoundMessage();
+                        break; 
+                        }
+                    }
                 }
-            }
-            catch(System.FormatException e)
+                catch (System.FormatException e)
+                {
+                    Console.WriteLine("Second argument (last) must be a number!");
+                }
+            if (!show)
             {
-                Console.WriteLine("Second argument (last) must be a number!");
+                CommandsAvaiableEverywhere(firstParametr, lastParametr, h, time);
             }
             return exit;
+            }
+
+
+        public static bool CommandsAvaiableEverywhere(string firtstParameter, string lastParametr, Hero h, Time time)
+        {
+            switch (firtstParameter)
+            {
+
+                case "show":
+                    if (lastParametr == "equipment" || lastParametr == "eq")
+                    {
+                        h.DisplayEquipment();
+                    }
+                    else if (lastParametr == "pocket")
+                    {
+                        h.DisplayPocket();
+                    }
+                    else if (lastParametr == "stats")
+                    {
+                        h.DisplayInformation();
+                    }
+                    else if (lastParametr == "gear")
+                    {
+                        h.DisplayGear();
+                    }
+                    else if (lastParametr == "location")
+                    {
+                        h.GetLocation().DisplayInformation();
+                    }
+                    else if (lastParametr == "time")
+                    {
+                        time.DisplayTime();
+                    }
+                    else ComandNotFoundMessage();
+                    return true;
+                case "equip":
+                case "e":
+                    try
+                    {
+                        int itemIndex = int.Parse(lastParametr);
+                        h.EquipItem(itemIndex);
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Console.WriteLine("You must provide a number as second argument");
+                    }
+                    catch (System.InvalidCastException e)
+                    {
+                        Console.WriteLine("You can not equip that!");
+                    }
+                    WriteMethods.WriteSeparator();
+                    return true;
+                case "unequip":
+                case "ue":
+                    switch (lastParametr)
+                    {
+                        case "head":
+                            h.UnequipItem(ItemKind.HEAD_ARMOUR);
+                            break;
+                        case "body":
+                        case "bodyarmour":
+                            h.UnequipItem(ItemKind.BODY_ARMOUR);
+                            break;
+                        case "gloves":
+                            h.UnequipItem(ItemKind.GLOVES);
+                            break;
+                        case "legs":
+                        case "legsarmour":
+                            h.UnequipItem(ItemKind.LEGS_ARMOUR);
+                            break;
+                        case "boots":
+                            h.UnequipItem(ItemKind.BOOTS);
+                            break;
+                        case "mainhand":
+                        case "weapon":
+                            h.UnequipItem(ItemKind.WEAPON);
+                            break;
+                        case "offhand":
+                            h.UnequipItem(ItemKind.OFF_HAND);
+                            break;
+                    }
+                    return true;
+                case "use":
+                case "u":
+                    try
+                    {
+                        int itemIndex = int.Parse(lastParametr);
+                        h.UseItem(itemIndex);
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Console.WriteLine("You must provide a number as second argument");
+                    }
+                    catch (System.InvalidCastException e)
+                    {
+                        Console.WriteLine("You can not use that!");
+                    }
+                    WriteMethods.WriteSeparator();
+                    return true;
+                case "cast":
+                    bool used = false;
+                    foreach (Skill skill in h.GetSkills())
+                    {
+                        if (skill.name.ToLowerInvariant() == lastParametr)
+                        {
+                            skill.Use(h, h);
+                            used = true;
+                            break;
+                        }
+                    }
+                    if (!used)
+                    {
+                        Console.WriteLine("Can not find skill!");
+                    }
+                    return true;
+                default:
+                    return false;
+            }
         }
 
     }
